@@ -1,10 +1,10 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
+import { Component, TemplateRef , OnInit } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MasterService } from 'src/app/services/master.service';
 import { SanidadService } from 'src/app/services/sanidad.service';
-import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { ImageCroppedEvent, LoadedImage} from 'ngx-image-cropper';
+import { NgxSpinnerService } from "ngx-spinner";
 import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,16 +14,17 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 @Component({
   selector: 'app-crear-persona',
   templateUrl: './crear-persona.component.html',
-  styleUrls: ['./crear-persona.component.css'],
+  styleUrls: ['./crear-persona.component.css']
 })
 export class CrearPersonaComponent implements OnInit {
+
   //Variables para Modal
   modalRef: any = BsModalRef;
 
   //Variables para Imagen
   imageUrl: string | null = 'assets/images/avatardefault_92824.png';
   selectedFile: File | null = null;
-  p_car_imgfot: string = '';
+  p_imgfot : string = '';
 
   imagenseleccionada: File | null = null;
   imagenrecort: File | null = null;
@@ -52,11 +53,10 @@ export class CrearPersonaComponent implements OnInit {
   p_pai_id: number = 179;
   p_udi_id: number = 1315;
   p_rec_direcc: string = '';
-  p_imgfot: string = '';
   p_etb_direcc: string = '';
-
+  
   //p_etb_id: number = 0;
-
+  
   p_manali: boolean = true;
   confsinomanali: string = '';
 
@@ -79,7 +79,7 @@ export class CrearPersonaComponent implements OnInit {
 
   p_act_id: string = ''; //ID RUBRO - GIRO
   //Fin variables
-
+  
   //Desde aqui Para el TypeHead ESTABLECIMIENTO
   noResultOcupacion: any;
   selectedOptionOcupacion: any;
@@ -106,16 +106,14 @@ export class CrearPersonaComponent implements OnInit {
   croppedImage: any = 'assets/images/avatardefault_92824.png';
   textoimagenurl: any = 'assets/images/avatardefault_92824.png';
 
-  constructor(
-    private appComponent: AppComponent,
-    private serviceMaster: MasterService,
-    private sanidadService: SanidadService,
-    private spinner: NgxSpinnerService,
-    private fb: FormBuilder,
-    private modalService: BsModalService,
-    private sanitizer: DomSanitizer,
-    private router: Router
-  ) {
+  constructor(private appComponent: AppComponent
+    , private serviceMaster: MasterService
+    , private sanidadService: SanidadService
+    , private spinner: NgxSpinnerService
+    , private fb: FormBuilder
+    , private modalService: BsModalService
+    , private sanitizer: DomSanitizer
+    , private router: Router) {
     this.appComponent.login = false;
   }
 
@@ -164,7 +162,7 @@ export class CrearPersonaComponent implements OnInit {
     }
   }
   //TERMINAR TYPEAHEAD
-
+  
   //ABRIR TYPEAHEAD RUBRO / GIRO
   typeaheadOnBlurRubro(event: TypeaheadMatch): void {
     this.optionOnBlurRubro = event.item;
@@ -194,7 +192,7 @@ export class CrearPersonaComponent implements OnInit {
     }
   }
   //TERMINAR TYPEAHEAD
-
+  
   //ABRIR TYPEAHEAD OCUPACION
   typeaheadOnBlurOcupacion(event: TypeaheadMatch): void {
     this.optionOnBlurOcupacion = event.item;
@@ -225,11 +223,11 @@ export class CrearPersonaComponent implements OnInit {
   }
   //TERMINAR TYPEAHEAD
 
-  Changemanali() {
+  Changemanali(){
     console.log(this.p_manali);
     if (this.p_manali) {
       this.confsinomanali = 'SI';
-    } else {
+    }else{
       this.confsinomanali = 'NO';
     }
   }
@@ -251,22 +249,22 @@ export class CrearPersonaComponent implements OnInit {
       p_rec_telcel: ['', [Validators.required]],
       p_etb_id: ['', [Validators.required]],
       p_etb_direcc: ['', [Validators.required]],
-    });
+    })
   }
 
   openModal(template: TemplateRef<any>, clase: string) {
     this.modalRef = this.modalService.show(template, { class: clase });
   }
-
+  
   cerrarModal() {
     this.modalRef?.hide();
   }
 
-  ChangeEstablecimiento(p_etb_id: string) {
+  ChangeEstablecimiento(p_etb_id : string){
     let post = {
-      p_etb_id: parseInt(p_etb_id),
-      p_etb_nombre: '',
-      p_etb_activo: 9,
+      p_etb_id : parseInt(p_etb_id),
+      p_etb_nombre : '',
+      p_etb_activo : 9,
     };
     this.sanidadService.listarEstablecimiento(post).subscribe({
       next: (data: any) => {
@@ -275,30 +273,31 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
-
+  
   GuardarCambiosImagen() {
     this.imageUrl = this.croppedImage;
     this.cerrarModal();
   }
 
   listarDepartamentos() {
-    let post = {};
+    let post = {
+    };
     this.serviceMaster.listarDepartamento(post).subscribe({
       next: (data: any) => {
         this.datosDepartamento = data;
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   listarProvincias() {
     let post = {
-      p_ude_id: this.p_ude_id,
+      p_ude_id: this.p_ude_id
     };
     this.serviceMaster.listarProvincia(post).subscribe({
       next: (data: any) => {
@@ -306,13 +305,13 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   listarDistritos() {
     let post = {
-      p_upr_id: this.p_upr_id,
+      p_upr_id: this.p_upr_id
     };
     this.serviceMaster.listarDistrito(post).subscribe({
       next: (data: any) => {
@@ -320,14 +319,14 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   listarTipoDocumentoIdentidad() {
     let post = {
       p_tdi_id: 0,
-      p_tpe_id: 1,
+      p_tpe_id: 1
     };
     this.serviceMaster.listarTipoDocumento(post).subscribe({
       next: (data: any) => {
@@ -335,7 +334,7 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
@@ -347,7 +346,7 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
@@ -359,19 +358,20 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   listarRubro() {
-    let post = {};
+    let post = {
+    };
     this.sanidadService.listarRubro(post).subscribe({
       next: (data: any) => {
         this.datosRubro = data;
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
@@ -383,15 +383,15 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   listarEstablecimiento() {
     let post = {
-      p_etb_id: 0,
-      p_etb_nombre: '',
-      p_etb_activo: 9,
+      p_etb_id : 0,
+      p_etb_nombre : '',
+      p_etb_activo : 9,
     };
     this.sanidadService.listarEstablecimiento(post).subscribe({
       next: (data: any) => {
@@ -399,16 +399,18 @@ export class CrearPersonaComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
-  llenarFormulario(data: any) {}
+  llenarFormulario(data: any) {
+
+  }
 
   buscarRecurrente() {
     let post = {
       p_tdi_id: this.p_tdi_id,
-      p_per_numdoi: this.p_tdi_numero,
+      p_per_numdoi: this.p_tdi_numero
     };
     this.spinner.show();
     this.sanidadService.listarRecurrente(post).subscribe({
@@ -420,7 +422,7 @@ export class CrearPersonaComponent implements OnInit {
           this.p_rec_apemat = data[0]['pen_apemat'];
           this.p_tge_id = data[0]['tge_id'];
           this.p_rec_correo = data[0]['pen_correo'];
-          this.p_rec_direcc = data[0]['dir_direcc'];
+          this.p_rec_direcc = data[0]['rec_direcc'];
           this.p_pai_id = data[0]['pai_id'];
           this.p_ude_id = data[0]['ude_id'];
           setTimeout(() => {
@@ -435,17 +437,18 @@ export class CrearPersonaComponent implements OnInit {
         } else {
           this.buscarPersona();
         }
+
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   buscarPersona() {
     let post = {
       p_tdi_id: this.p_tdi_id,
-      p_per_numdoi: this.p_tdi_numero,
+      p_per_numdoi: this.p_tdi_numero
     };
     this.serviceMaster.buscarPersonaBus(post).subscribe({
       next: (data: any) => {
@@ -463,10 +466,11 @@ export class CrearPersonaComponent implements OnInit {
         } else {
           this.buscarPersonaPide();
         }
+
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
@@ -474,103 +478,146 @@ export class CrearPersonaComponent implements OnInit {
     let post = {
       dni: this.p_tdi_numero,
       usuario: 75346505,
-      app: 1,
+      app: 1
     };
     this.serviceMaster.buscarPersonaPide(post).subscribe({
       next: (data: any) => {
-        if (data['consultarResponse']['return']['coResultado'] === '0000') {
-          let response = data['consultarResponse']['return']['datosPersona'];
-          console.log(response);
-          this.p_rec_nombre = response['prenombres'];
-          this.p_rec_apepat = response['apPrimer'];
-          this.p_rec_apemat = response['apSegundo'];
-          this.p_rec_direcc = response['direccion'];
+          if (data['consultarResponse']['return']['coResultado'] === '0000') {
+            let response = data['consultarResponse']['return']['datosPersona'];
+            console.log(response);
+            this.p_rec_nombre = response['prenombres'];
+            this.p_rec_apepat = response['apPrimer'];
+            this.p_rec_apemat = response['apSegundo'];
+            this.p_rec_direcc = response['direccion'];
+            this.spinner.hide();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Ocurrió un error, por favor registre los datos de manera manual.",
+            });
+          }
           this.spinner.hide();
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Ocurrió un error, por favor registre los datos de manera manual.',
-          });
-        }
-        this.spinner.hide();
       },
       error: (error: any) => {
         console.log(error);
-      },
+      }
     });
   }
 
   guardarRecurrente() {
-    let post = {
-      p_per_id: this.p_per_id,
-      p_tdi_id: this.p_tdi_id,
-      p_tdi_numero: this.p_tdi_numero,
-      p_rec_apepat: this.p_rec_apepat,
-      p_rec_apemat: this.p_rec_apemat,
-      p_rec_nombre: this.p_rec_nombre,
-      p_tge_id: this.p_tge_id,
-      p_rec_correo: this.p_rec_correo,
-      p_rec_telfij: this.p_rec_telfij,
-      p_rec_telcel: this.p_rec_telcel,
-      p_pai_id: this.p_pai_id,
-      p_udi_id: this.p_udi_id,
-      p_rec_direcc: this.p_rec_direcc,
-      p_imgfot: this.p_imgfot,
-    };
 
-    Swal.fire({
-      title: '<b>Confirmación</b>',
-      text: '¿Estás seguro de guardar la información?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.sanidadService.guardarRecurrente(post).subscribe({
-          next: (data: any) => {
-            let result = data[0];
-            if (result.hasOwnProperty('error')) {
-              if (result.error === 0) {
-                Swal.fire({
-                  title: '<h2>Confirmación</h2>',
-                  text: result.mensa,
-                  icon: 'success',
-                  confirmButtonText: 'Cerrar',
-                  confirmButtonColor: '#3085d6',
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.router.navigate(['persona']);
-                  }
-                });
-              } else {
-                Swal.fire(result.mensa, 'Verifique los datos', 'error');
-              }
-            } else {
-              Swal.fire('Ocurrió un error', 'Vuelva a intentarlo', 'error');
-            }
-          },
-          error: (error: any) => {
-            console.log(error);
-          },
-        });
+    if(this.p_tdi_numero.length < 6 || this.p_per_id == 0){
+      Swal.fire('Ingresar número de documento válido', 'Vuelva a intentarlo', 'error');
+    }else{
+      const dataPost = new FormData();
+      if (this.imagenrecort) {
+        var datoEstablecimiento = (<HTMLInputElement>document.getElementById("datoEstablecimientos")).value;
+        var datoRubro = (<HTMLInputElement>document.getElementById("datoRubro")).value;
+        var datoOcupacion = (<HTMLInputElement>document.getElementById("datoOcupacion")).value;
+
+        var p_per_id = this.p_per_id;
+        var p_tdi_id = this.p_tdi_id;
+        var p_tdi_numero = this.p_tdi_numero;
+        var p_rec_apepat = this.p_rec_apepat;
+        var p_rec_apemat = this.p_rec_apemat;
+        var p_rec_nombre = this.p_rec_nombre;
+        var p_tge_id = this.p_tge_id;
+        var p_rec_correo = this.p_rec_correo;
+        var p_rec_telfij = '';
+        var p_rec_telcel = this.p_rec_telcel;
+        var p_pai_id = this.p_pai_id;
+        var p_udi_id = this.p_udi_id;
+        var p_rec_direcc = this.p_rec_direcc;
+        var p_etb_id = this.p_etb_id;
+        var p_etb_nombre = datoEstablecimiento;
+        var p_etb_direcc = this.p_etb_direcc;
+        var p_act_id = this.p_act_id;
+        var p_act_nombre = datoRubro;
+        var p_ocu_id = this.p_ocu_id;
+        var p_ocu_nombre = datoOcupacion;
+        var p_imgfot = this.p_imgfot;
+
+        var p_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
+
+  
+        dataPost.append('p_per_id',p_per_id.toString());
+        dataPost.append('p_tdi_id',p_tdi_id.toString());
+        dataPost.append('p_tdi_numero',p_tdi_numero);
+        dataPost.append('p_rec_apepat',p_rec_apepat);
+        dataPost.append('p_rec_apemat',p_rec_apemat);
+        dataPost.append('p_rec_nombre',p_rec_nombre);
+        dataPost.append('p_tge_id',p_tge_id.toString());
+        dataPost.append('p_rec_correo',p_rec_correo.toString());
+        dataPost.append('p_rec_telfij',p_rec_telfij);
+        dataPost.append('p_rec_telcel',p_rec_telcel);
+        dataPost.append('p_pai_id',p_pai_id.toString());
+        dataPost.append('p_udi_id',p_udi_id.toString());
+        dataPost.append('p_rec_direcc',p_rec_direcc);
+        dataPost.append('p_etb_id',p_etb_id);
+        dataPost.append('p_etb_nombre',p_etb_nombre);
+        dataPost.append('p_etb_direcc',p_etb_direcc);
+        dataPost.append('p_act_id',p_act_id);
+        dataPost.append('p_act_nombre',p_act_nombre);
+        dataPost.append('p_ocu_id',p_ocu_id);
+        dataPost.append('p_ocu_nombre',p_ocu_nombre);
+        dataPost.append('p_imgfot',p_imgfot);
+
+        dataPost.append('p_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);
+        dataPost.append('p_imgext',p_imgext);
+        dataPost.append('p_tdi_id',p_tdi_id.toString());
+        dataPost.append('p_per_numdoi',p_tdi_numero.toString());
+  
+      } else {
+        console.error('No se ha seleccionado ningún archivo.');
       }
-    });
+      Swal.fire({
+        title: '<b>Confirmación</b>',
+        text: "¿Estás seguro de guardar la información?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.sanidadService.guardarRecurrente(dataPost).subscribe({
+            next: (data: any) => {
+              let result = data[0];
+              if (result.hasOwnProperty('error')) {
+                if (result.error === 0) {
+                  Swal.fire({ title: '<h2>Confirmación</h2>', text: result.mensa, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((result) => {
+                    if (result.isConfirmed) {
+                      this.router.navigate(['carne']);
+                    }
+                  });
+                }else{
+                  Swal.fire(result.mensa, 'Verifique los datos', 'error')
+                }
+              } else {
+                Swal.fire('Ocurrió un error', 'Vuelva a intentarlo', 'error')
+              }
+            },
+            error: (error: any) => {
+              console.log(error);
+            }
+          });
+        }
+      })
+    }
   }
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
-
+  
   async getObjectUrlBlob(objectUrl: string): Promise<File> {
     const response = await fetch(objectUrl);
     const blob = await response.blob();
-
+    
     // Puedes ajustar el nombre del archivo según tus necesidades
-    const fileName = this.p_car_imgfot;
+    const fileName = this.p_imgfot;
 
     // Crear un nuevo archivo con el Blob y el nombre
     const file = new File([blob], fileName, { type: blob.type });
@@ -583,24 +630,20 @@ export class CrearPersonaComponent implements OnInit {
     this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
 
     this.getObjectUrlBlob(event.objectUrl)
-      .then((file) => {
-        // Manejar el archivo recortado como sea necesario
-        this.imagenrecort = file;
-        console.log('Archivo recortado:', this.imagenrecort);
-      })
-      .catch((error) => {
-        console.error('Error al obtener el Blob:', error);
-      });
+        .then(file => {
+            // Manejar el archivo recortado como sea necesario
+            this.imagenrecort = file;
+            console.log('Archivo recortado:', this.imagenrecort);
+        })
+        .catch(error => {
+            console.error('Error al obtener el Blob:', error);
+        });
 
     if (event.base64) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
-        event.objectUrl
-      );
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
       const fileBlob = this.dataURItoBlob(event.base64);
       if (fileBlob) {
-        const file = new File([fileBlob], this.p_car_imgfot, {
-          type: 'image/png',
-        });
+        const file = new File([fileBlob], this.p_imgfot, { type: 'image/png' });
         /* this.selectedFile = file; */
         console.log('Archivo recortado:', file);
       } else {
@@ -609,35 +652,36 @@ export class CrearPersonaComponent implements OnInit {
     } else {
       console.error('base64 en event es undefined.');
     }
+  
   }
-
+  
   dataURItoBlob(dataURI: string | undefined): Blob | null {
     if (!dataURI || typeof dataURI !== 'string') {
       console.error('dataURI no es válido:', dataURI);
       return null;
     }
-
+  
     const commaIndex = dataURI.indexOf(',');
     if (commaIndex === -1) {
       console.error('dataURI no contiene una coma (,):', dataURI);
       return null;
     }
-
+  
     const byteString = atob(dataURI.slice(commaIndex + 1));
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
-
+  
     for (let i = 0; i < byteString.length; i++) {
       int8Array[i] = byteString.charCodeAt(i);
     }
-
+  
     return new Blob([int8Array], { type: 'image/png' });
   }
 
   imageLoaded(image: LoadedImage) {
     // show cropper
   }
-
+  
   cropperReady() {
     // cropper ready
   }
@@ -649,38 +693,31 @@ export class CrearPersonaComponent implements OnInit {
   onFileSelected(event: any): void {
     this.imageChangedEvent = event;
     const file: File = event.target.files[0];
-
+    
     this.selectedFile = file;
-    this.p_car_imgfot = this.selectedFile.name;
-    var p_car_imgext = this.p_car_imgfot
-      .slice(((this.p_car_imgfot.lastIndexOf('.') - 1) >>> 0) + 2)
-      .toLocaleLowerCase();
+    this.p_imgfot = this.selectedFile.name;
+    var p_car_imgext = this.p_imgfot.slice(((this.p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2).toLocaleLowerCase();
 
-    if (
-      p_car_imgext == 'jpeg' ||
-      p_car_imgext == 'png' ||
-      p_car_imgext == 'jpg'
-    ) {
+    if (p_car_imgext == 'jpeg' || p_car_imgext == 'png' || p_car_imgext == 'jpg') {
+
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imageUrl = e.target.result;
       };
       reader.readAsDataURL(file);
-      document.getElementById('btnmodalimagen')?.click();
-    } else {
-      Swal.fire(
-        'Solo se admite archivos con extensión jpeg , png o jpg',
-        'Vuelva a intentarlo',
-        'error'
-      );
+      document.getElementById("btnmodalimagen")?.click();
 
-      const fileInput = document.getElementById(
-        'fileimagenup'
-      ) as HTMLInputElement;
+    }else{
+      Swal.fire('Solo se admite archivos con extensión jpeg , png o jpg', 'Vuelva a intentarlo', 'error');
+
+      const fileInput = document.getElementById('fileimagenup') as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ''; // Esto restablecerá el valor del input file
         this.imageUrl = this.textoimagenurl;
       }
     }
   }
+
 }
+
+

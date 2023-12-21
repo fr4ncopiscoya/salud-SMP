@@ -229,7 +229,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-floating">
-                                                                <input type="email" class="form-control form-control-sm"
+                                                                <input type="text" class="form-control form-control-sm"
                                                                     [(ngModel)]="p_rec_direcc" formControlName="p_rec_direcc">
                                                                 <div
                                                                     *ngIf="form.get('p_rec_direcc')?.invalid && (form.get('p_rec_direcc')?.dirty || form.get('p_rec_direcc')?.touched)">
@@ -260,7 +260,7 @@
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <div class="form-floating">
-                                                                <input [(ngModel)]="selectedValueRubro" [typeahead]="datosRubro"
+                                                                <input [(ngModel)]="selectedValueRubro" [typeahead]="datosRubro" id="datoRubro"
                                                                         (typeaheadOnBlur)="typeaheadOnBlurRubro($event)"
                                                                         (typeaheadNoResults)="typeaheadNoResultsRubro($event)"
                                                                         typeaheadOptionField="act_descri" (typeaheadOnSelect)="onSelectRubro($event)"
@@ -272,7 +272,7 @@
                                                         </div>
                                                         <div class="col-md-5">
                                                             <div class="form-floating">
-                                                                <input [(ngModel)]="selectedValueOcupacion" [typeahead]="datosOcupacion"
+                                                                <input [(ngModel)]="selectedValueOcupacion" [typeahead]="datosOcupacion" id="datoOcupacion"
                                                                         (typeaheadOnBlur)="typeaheadOnBlurOcupacion($event)"
                                                                         (typeaheadNoResults)="typeaheadNoResultsOcupacion($event)"
                                                                         typeaheadOptionField="ocu_descri" (typeaheadOnSelect)="onSelectOcupacion($event)"
@@ -297,7 +297,7 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
-                                                                <input [(ngModel)]="selectedValue" [typeahead]="datosEstablecimientos"
+                                                                <input [(ngModel)]="selectedValue" [typeahead]="datosEstablecimientos" id="datoEstablecimientos"
                                                                         (typeaheadOnBlur)="typeaheadOnBlur($event)"
                                                                         (typeaheadNoResults)="typeaheadNoResults($event)"
                                                                         typeaheadOptionField="etb_nombre" (typeaheadOnSelect)="onSelect($event)"

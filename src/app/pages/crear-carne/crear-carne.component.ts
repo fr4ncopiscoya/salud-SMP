@@ -141,6 +141,7 @@ export class CrearCarneComponent implements OnInit {
         var p_car_manali = this.utils.setBooleanToInteger(this.p_car_manali);
         var p_car_fecemi = this.p_car_fecemi;
         var p_car_numrec = this.utils.convertirNumeroceroIZQ(this.p_car_numrec, 13);
+        
         var p_car_imgfot = this.p_car_imgfot;
         var p_car_imgext = p_car_imgfot.slice(((p_car_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
         var p_tdi_id = this.p_tdi_id;
@@ -156,6 +157,7 @@ export class CrearCarneComponent implements OnInit {
         dataPost.append('p_car_manali',p_car_manali.toString());
         dataPost.append('p_car_fecemi',p_car_fecemi);
         dataPost.append('p_car_numrec',p_car_numrec);
+
         dataPost.append('p_car_imgfot',p_car_imgfot);
         dataPost.append('p_car_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);
         dataPost.append('p_car_imgext',p_car_imgext);
