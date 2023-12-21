@@ -539,7 +539,7 @@ export class CrearPersonaComponent implements OnInit {
         var p_imgfot = this.p_imgfot;
 
         var p_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
-
+        console.log(p_imgext);
   
         dataPost.append('p_per_id',p_per_id.toString());
         dataPost.append('p_tdi_id',p_tdi_id.toString());
@@ -565,8 +565,7 @@ export class CrearPersonaComponent implements OnInit {
 
         dataPost.append('p_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);
         dataPost.append('p_imgext',p_imgext);
-        dataPost.append('p_tdi_id',p_tdi_id.toString());
-        dataPost.append('p_per_numdoi',p_tdi_numero.toString());
+        dataPost.append('p_tdi_numero',p_tdi_numero.toString());
   
       } else {
         console.error('No se ha seleccionado ningún archivo.');
