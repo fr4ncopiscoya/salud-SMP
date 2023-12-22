@@ -421,8 +421,13 @@ export class CrearPersonaComponent implements OnInit {
           this.p_rec_apepat = data[0]['pen_apepat'];
           this.p_rec_apemat = data[0]['pen_apemat'];
           this.p_tge_id = data[0]['tge_id'];
-          this.p_rec_correo = data[0]['pen_correo'];
-          this.p_rec_direcc = data[0]['rec_direcc'];
+          this.p_rec_correo = data[0]['pec_correo'];
+          if(data[0]['rec_telcel'] == "null"){
+            this.p_rec_telcel = '';
+          }else{
+            this.p_rec_telcel = data[0]['rec_telcel'];
+          }
+          this.p_rec_direcc = data[0]['dir_direcc'];
           this.p_pai_id = data[0]['pai_id'];
           this.p_ude_id = data[0]['ude_id'];
           setTimeout(() => {
