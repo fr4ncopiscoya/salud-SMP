@@ -542,6 +542,7 @@ export class CrearPersonaComponent implements OnInit {
         var p_ocu_id = this.p_ocu_id;
         var p_ocu_nombre = datoOcupacion;
         var p_imgfot = this.p_imgfot;
+        var p_etb_manali = this.p_manali;
 
         var p_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
         console.log(p_imgext);
@@ -566,6 +567,7 @@ export class CrearPersonaComponent implements OnInit {
         dataPost.append('p_act_nombre',p_act_nombre);
         dataPost.append('p_ocu_id',p_ocu_id);
         dataPost.append('p_ocu_nombre',p_ocu_nombre);
+        dataPost.append('p_etb_manali',p_etb_manali.toString());
         dataPost.append('p_imgfot',p_imgfot);
 
         dataPost.append('p_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);

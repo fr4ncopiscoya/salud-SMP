@@ -343,12 +343,15 @@ export class CrearCarneComponent implements OnInit {
             this.pen_nombre = result['pen_nombre'];
             this.pen_apepat = result['pen_apepat'];
             this.pen_apemat = result['pen_apemat'];
+            
+            this.imageUrl= 'http://172.17.1.56/files/salud/'+data[0]['rec_imgfot'];
 
             this.showImageColumn = true;
             this.firstcolumn = '4';
             this.secondcolumn = '8';
-            /* this.p_car_direcc = result['rec_direcc'];
-            this.p_car_correo = result['rec_correo']; */
+            
+            this.p_car_direcc = result['pec_direcc'];
+            this.p_car_correo = result['pec_correo'];
           }else{
             Swal.fire('No se encontraron resultados', 'Vuelva a intentarlo', 'error');
             this.p_per_id = '';
