@@ -98,4 +98,12 @@ export class SanidadService {
             })
         );
     }
+    
+    BuscarRecibo(data: any) {
+        return this.httpClientUtils.postQuery('sanidad/apirecibosel', data).pipe(
+            map(data => {
+                return data;
+            })
+        );
+    }
 }
