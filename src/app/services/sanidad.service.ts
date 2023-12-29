@@ -106,4 +106,36 @@ export class SanidadService {
             })
         );
     }
+    
+    AnularCarnet(data: any) {
+        return this.httpClientUtils.postQuery('sanidad/AnularCarnet', data).pipe(
+            map(data => {
+                return data;
+            })
+        );
+    }
+    
+    AnularCertificado(data: any) {
+        return this.httpClientUtils.postQuery('sanidad/AnularCertificado', data).pipe(
+            map(data => {
+                return data;
+            })
+        );
+    }
+    
+    SendCorreoCarnet(data: any) {
+        return this.httpClientUtils.postQuery('sanidad/ProcesoEnvioCorreoCarnet', data).pipe(
+            map(data => {
+                return data;
+            })
+        );
+    }
+    
+    SendCorreoCertificado(data: any) {
+        return this.httpClientUtils.postQuery('sanidad/ProcesoEnvioCorreoCertificado', data).pipe(
+            map(data => {
+                return data;
+            })
+        );
+    }
 }

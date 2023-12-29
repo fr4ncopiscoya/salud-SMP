@@ -78,15 +78,6 @@
                                 <div class="col-2">
                                   <input [(ngModel)]="p_cer_fecfin" type="date" class="form-control form-control-sm">
                                 </div>
-                                <div class="col-1 text-center">
-                                  <label class="col-form-label">RUC:</label>
-                                </div>
-                                <div class="col-2">
-                                  <input type="number" class="form-control form-control-sm" [(ngModel)]="p_ruc" (blur)="buscarPersonaJuridica()" placeholder="Ingrese RUC">
-                                </div>
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-sm" [(ngModel)]="p_razon_social" readonly>
-                                </div>
                             </div>
                             <div class="row pt-3">
                                 <div class="col-sm-auto">
@@ -144,7 +135,11 @@
                                             <td>{{ data.cer_fecemi }}</td>
                                             <td>{{ data.cer_fecven }}</td>
                                             <td>{{ data.cer_estado }}</td>
-                                            <td><button type="button" (click)="openModalWithClass(Imprimir,data)" class="btn btn-primary btn-sm"><i class="bi bi-eye fs-10"></i></button></td>
+                                            <td>
+                                                <button type="button" *ngIf="data.cer_estado == 'ACTIVO'" (click)="openModalWithClass(Imprimir,data)" class="btn btn-primary btn-sm"><i class="bi bi-eye fs-10"></i></button>
+                                                <button type="button" *ngIf="data.cer_estado == 'ACTIVO' && data.pec_correo !== null" (click)="SendCorreoCertificado(data)" class="btn btn-success btn-sm"><i class="ri ri-mail-line fs-10" ></i></button>
+                                                <button type="button" *ngIf="data.cer_estado == 'ACTIVO'" (click)="AnularCertificado(data.cer_id)" class="btn btn-danger btn-sm"><i class="ri ri-close-circle-line fs-10"></i></button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -157,6 +152,6 @@
     </div>
 </div>
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-square-spin" [fullScreen]="false">
-    <p style="color: white"> Buscando información... </p>
+    <p style="color: white"> {{p_mensaload}} </p>
 </ngx-spinner>
 <app-toast></app-toast>
