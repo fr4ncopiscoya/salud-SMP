@@ -189,7 +189,8 @@
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
                                                                 <select class="form-select" id="p_ude_id"
-                                                                    formControlName="p_ude_id" [(ngModel)]="p_ude_id" (change)="listarProvincias()">
+                                                                    formControlName="p_ude_id" [(ngModel)]="p_ude_id"
+                                                                    (change)="listarProvincias()">
                                                                     <option selected value="0">Seleccione...</option>
                                                                     <option *ngFor="let data of datosDepartamento"
                                                                         value="{{data.ude_id}}">{{data.ude_descri}}</option>
@@ -200,7 +201,8 @@
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
                                                                 <select class="form-select "
-                                                                    [(ngModel)]="p_upr_id" (change)="listarDistritos()" formControlName="p_upr_id" id="p_upr_id">
+                                                                    [(ngModel)]="p_upr_id" (change)="listarDistritos()"
+                                                                    formControlName="p_upr_id">
                                                                     <option selected value="0">Seleccione...</option>
                                                                     <option *ngFor="let data of datosProvincia"
                                                                         value="{{data.upr_id}}">
@@ -211,7 +213,8 @@
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
-                                                                <select class="form-select" [(ngModel)]="p_udi_id" formControlName="p_udi_id" id="p_udi_id">
+                                                                <select class="form-select"
+                                                                    [(ngModel)]="p_udi_id" formControlName="p_udi_id">
                                                                     <option selected="" value="0">Seleccione...</option>
                                                                     <option *ngFor="let data of datosDistrito"
                                                                         value="{{data.udi_id}}">
