@@ -526,6 +526,14 @@ export class CrearPersonaComponent implements OnInit {
 
     if(this.p_tdi_numero.length < 6 || this.p_per_id == 0){
       Swal.fire('Ingresar número de documento válido', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_rec_direcc == ''){
+      Swal.fire('Ingresar una dirección válida', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_rec_telcel == ''){
+      Swal.fire('Ingresar un número telefónico válido', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_rec_correo == ''){
+      Swal.fire('Ingresar un número telefónico válido', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_imgfot == ''){
+      Swal.fire('Ingresar imagen de Persona', 'Vuelva a intentarlo', 'error');
     }else{
       const dataPost = new FormData();
       if (this.imagenrecort) {
@@ -567,7 +575,7 @@ export class CrearPersonaComponent implements OnInit {
         dataPost.append('p_rec_apemat',p_rec_apemat);
         dataPost.append('p_rec_nombre',p_rec_nombre);
         dataPost.append('p_tge_id',p_tge_id.toString());
-        dataPost.append('p_rec_correo',p_rec_correo.toString());
+        dataPost.append('p_rec_correo',p_rec_correo);
         dataPost.append('p_rec_telfij',p_rec_telfij);
         dataPost.append('p_rec_telcel',p_rec_telcel);
         dataPost.append('p_pai_id',p_pai_id.toString());
@@ -626,7 +634,7 @@ export class CrearPersonaComponent implements OnInit {
         dataPost.append('p_rec_apemat',p_rec_apemat);
         dataPost.append('p_rec_nombre',p_rec_nombre);
         dataPost.append('p_tge_id',p_tge_id.toString());
-        dataPost.append('p_rec_correo',p_rec_correo.toString());
+        dataPost.append('p_rec_correo',p_rec_correo);
         dataPost.append('p_rec_telfij',p_rec_telfij);
         dataPost.append('p_rec_telcel',p_rec_telcel);
         dataPost.append('p_pai_id',p_pai_id.toString());
@@ -657,7 +665,6 @@ export class CrearPersonaComponent implements OnInit {
           this.sanidadService.guardarRecurrente(dataPost).subscribe({
             next: (data: any) => {
               let result = data[0];
-              if (result.hasOwnProperty('error')) {
                 if (result.error === 0) {
                   Swal.fire({ title: '<h2>Confirmación</h2>', text: result.mensa, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((result) => {
                     if (result.isConfirmed) {
@@ -667,9 +674,6 @@ export class CrearPersonaComponent implements OnInit {
                 }else{
                   Swal.fire(result.mensa, 'Verifique los datos', 'error')
                 }
-              } else {
-                Swal.fire('Ocurrió un error', 'Vuelva a intentarlo', 'error')
-              }
             },
             error: (error: any) => {
               console.log(error);
