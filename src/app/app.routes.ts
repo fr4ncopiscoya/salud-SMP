@@ -11,6 +11,8 @@ import { CarneComponent } from './pages/carne/carne.component';
 import { CertificadoComponent } from './pages/certificado/certificado.component';
 import { MascotaComponent } from './pages/mascota/mascota.component';
 import { CrearMascotaComponent } from './pages/crear-mascota/crear-mascota.component';
+import { PropietarioComponent } from './pages/propietario/propietario.component';
+import { CrearPropietarioComponent } from './pages/crear-propietario/crear-propietario.component';
 
 export const ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +26,9 @@ export const ROUTES: Routes = [
   { path: 'certificado/crear-certificado',component: CrearCertificadoComponent,},
   { path: 'mascota', component: MascotaComponent },
   { path: 'mascota/crear-mascota', component: CrearMascotaComponent },
+  { path: 'propietario', component: PropietarioComponent },
+  { path: 'propietario/crear-propietario', component: CrearPropietarioComponent },
+  
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
