@@ -9,17 +9,21 @@ import { CrearCarneComponent } from './pages/crear-carne/crear-carne.component';
 import { CrearCertificadoComponent } from './pages/crear-certificado/crear-certificado.component';
 import { CarneComponent } from './pages/carne/carne.component';
 import { CertificadoComponent } from './pages/certificado/certificado.component';
+import { MascotaComponent } from './pages/mascota/mascota.component';
+import { CrearMascotaComponent } from './pages/crear-mascota/crear-mascota.component';
 
 export const ROUTES: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'logout', component: LogoutComponent , canActivate: [AuthGuard]},
-    { path: 'persona', component: PersonaComponent },
-    { path: 'persona/crear-persona', component: CrearPersonaComponent },
-    { path: 'carne', component: CarneComponent },
-    { path: 'carne/crear-carne', component: CrearCarneComponent },
-    { path: 'certificado', component: CertificadoComponent },
-    { path: 'certificado/crear-certificado', component: CrearCertificadoComponent },
-    { path: '', pathMatch: 'full', redirectTo: 'login' },
-    { path: '**', pathMatch: 'full', redirectTo: 'login' }
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
+  { path: 'persona', component: PersonaComponent },
+  { path: 'persona/crear-persona', component: CrearPersonaComponent },
+  { path: 'carne', component: CarneComponent },
+  { path: 'carne/crear-carne', component: CrearCarneComponent },
+  { path: 'certificado', component: CertificadoComponent },
+  { path: 'certificado/crear-certificado',component: CrearCertificadoComponent,},
+  { path: 'mascota', component: MascotaComponent },
+  { path: 'mascota/crear-mascota', component: CrearMascotaComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];

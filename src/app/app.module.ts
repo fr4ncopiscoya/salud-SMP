@@ -34,6 +34,8 @@ import { CrearCertificadoComponent } from './pages/crear-certificado/crear-certi
 import { ModalcarneComponent } from './components/modalcarne/modalcarne.component';
 import { ModalcertificadoComponent } from './components/modalcertificado/modalcertificado.component';
 import { TypeaheadModule } from "ngx-bootstrap/typeahead";
+import { MascotaComponent } from './pages/mascota/mascota.component';
+import { CrearMascotaComponent } from './pages/crear-mascota/crear-mascota.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { TypeaheadModule } from "ngx-bootstrap/typeahead";
     CrearCertificadoComponent,
     ModalcarneComponent,
     ModalcertificadoComponent,
+    MascotaComponent,
+    CrearMascotaComponent,
   ],
   imports: [
     BrowserModule,
