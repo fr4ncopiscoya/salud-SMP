@@ -117,8 +117,40 @@ export class SanidadService {
 
   //MASCOTAS
 
+  animalreg(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/animalreg', data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   animalsel(data: any) {
     return this.httpClientUtils.postQuery('sanidad/animalsel', data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  especiesel(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/especiesel', data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  animalsexosel(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/animalsexosel', data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
+  especierazasel(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/especierazasel', data).pipe(
       map((data) => {
         return data;
       })

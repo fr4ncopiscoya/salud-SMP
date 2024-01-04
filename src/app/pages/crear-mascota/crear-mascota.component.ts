@@ -29,6 +29,181 @@ export class CrearMascotaComponent implements OnInit {
   imagenrecort: File | null = null;
   form!: FormGroup;
 
+  //Var
+  datosTipoEspecie: any;
+  datosTipoSexo: any;
+  datosTipoRaza: any;
+
+  p_ani_id: number = 0;
+  p_esp_id: number = 0;
+  p_anr_id: number = 0;
+  p_ans_id: number = 0;
+  p_ani_nombre: string = '';
+  p_ani_pesnet: number = 0;
+  p_ani_canpat: number = 0;
+  p_ani_tamalt: number = 0;
+  p_ani_tamlar: number = 0;
+  p_ani_numojo: number = 0;
+  p_ani_edadan: number = 0;
+  p_ani_muerto: number = 0;
+  p_ani_imgfot: string = '';
+  p_ani_codigo: string = '';
+
+  anr_id: number = 0;
+  // p_ani_tamalt: string = '';
+
+  //Especie_Sel
+  // p_esp_descri: string = '';
+  // p_esp_activo: number = 9;
+
+  //Functions
+  animalreg() {
+    const dataPost = new FormData();
+    if (this.imagenrecort) {
+      // var datoEstablecimiento = (<HTMLInputElement>(
+      //   document.getElementById('datoEstablecimientos')
+      // )).value;
+      // var datoRubro = (<HTMLInputElement>document.getElementById('datoRubro'))
+      //   .value;
+      // var datoOcupacion = (<HTMLInputElement>(
+      //   document.getElementById('datoOcupacion')
+      // )).value;
+
+      var p_ani_id = this.p_ani_id;
+      var p_esp_id = this.p_esp_id;
+      var p_anr_id = this.p_anr_id;
+      var p_ans_id = this.p_ans_id;
+      var p_ani_nombre = this.p_ani_nombre;
+      var p_ani_codigo = this.p_ani_codigo;
+      var p_ani_pesnet = this.p_ani_pesnet;
+      var p_ani_canpat = this.p_ani_canpat;
+      var p_ani_tamalt = this.p_ani_tamalt;
+      var p_ani_tamlar = this.p_ani_tamlar;
+      var p_ani_numojo = this.p_ani_numojo;
+      var p_ani_edadan = this.p_ani_edadan;
+      var p_ani_muerto = this.p_ani_muerto;
+      var p_ani_imgfot = this.p_ani_imgfot;
+
+      // var p_imgext = p_imgfot.slice(
+      //   ((p_imgfot.lastIndexOf('.') - 1) >>> 0) + 2
+      // );
+      // console.log(p_imgext);
+
+      dataPost.append('p_ani_id', p_ani_id.toString());
+      dataPost.append('p_esp_id', p_esp_id.toString());
+      dataPost.append('p_anr_id', p_anr_id.toString());
+      dataPost.append('p_ans_id', p_ans_id.toString());
+      dataPost.append('p_ani_nombre', p_ani_nombre.toString());
+      dataPost.append('p_ani_codigo', p_ani_codigo.toString());
+      dataPost.append('p_ani_pesnet', p_ani_pesnet.toString());
+      dataPost.append('p_ani_canpat', p_ani_canpat.toString());
+      dataPost.append('p_ani_tamalt', p_ani_tamalt.toString());
+      dataPost.append('p_ani_tamlar', p_ani_tamlar.toString());
+      dataPost.append('p_ani_numojo', p_ani_numojo.toString());
+      dataPost.append('p_ani_edadan', p_ani_edadan.toString());
+      dataPost.append('p_ani_muerto', p_ani_muerto.toString());
+      dataPost.append('p_ani_imgfot', p_ani_imgfot);
+
+      dataPost.append(
+        'p_imgfot_file[]',
+        this.imagenrecort,
+        this.imagenrecort.name
+      );
+      // dataPost.append('p_imgext', p_imgext);
+      // dataPost.append('p_tdi_numero', p_tdi_numero.toString());
+    } else {
+      console.error('No se ha seleccionado ningún archivo.');
+    }
+    Swal.fire({
+      title: '<b>Confirmación</b>',
+      text: '¿Estás seguro de guardar la información?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.sanidadService.animalreg(dataPost).subscribe({
+          next: (data: any) => {
+            let result = data[0];
+            if (result.hasOwnProperty('error')) {
+              if (result.error === 0) {
+                Swal.fire({
+                  title: '<h2>Confirmación</h2>',
+                  text: result.mensa,
+                  icon: 'success',
+                  confirmButtonText: 'Cerrar',
+                  confirmButtonColor: '#3085d6',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate(['carne']);
+                  }
+                });
+              } else {
+                Swal.fire(result.mensa, 'Verifique los datos', 'error');
+              }
+            } else {
+              Swal.fire('Ocurrió un error', 'Vuelva a intentarlo', 'error');
+            }
+          },
+          error: (error: any) => {
+            console.log(error);
+          },
+        });
+      }
+    });
+  }
+
+  especiesel() {
+    let post = {
+      p_esp_id: 0,
+      p_esp_descri: '',
+      p_esp_activo: 9,
+    };
+    this.sanidadService.especiesel(post).subscribe({
+      next: (data: any) => {
+        this.datosTipoEspecie = data;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
+  especierazasel() {
+    let post = {
+      p_esp_id: 0,
+      p_anr_id: 0,
+      p_esr_activo: 9,
+    };
+    this.sanidadService.especierazasel(post).subscribe({
+      next: (data: any) => {
+        this.datosTipoSexo = data;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
+  animalsexosel() {
+    let post = {
+      p_ans_id: 0,
+      p_ans_descri: '',
+      p_ans_activo: 9,
+    };
+    this.sanidadService.animalsexosel(post).subscribe({
+      next: (data: any) => {
+        this.datosTipoSexo = data;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
@@ -171,10 +346,15 @@ export class CrearMascotaComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private serviceSanidad: SanidadService,
     private modalService: BsModalService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private sanidadService: SanidadService
   ) {
     this.appComponent.login = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.especiesel();
+    this.animalsexosel();
+    this.especierazasel();
+  }
 }
