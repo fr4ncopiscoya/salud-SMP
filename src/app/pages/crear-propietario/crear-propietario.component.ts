@@ -24,7 +24,6 @@ export class CrearPropietarioComponent implements OnInit {
   //Variables para Imagen
   imageUrl: string | null = 'assets/images/avatardefault_92824.png';
   selectedFile: File | null = null;
-  p_imgfot : string = '';
 
   imagenseleccionada: File | null = null;
   imagenrecort: File | null = null;
@@ -54,6 +53,9 @@ export class CrearPropietarioComponent implements OnInit {
   p_udi_id: number = 1315;
   p_rec_direcc: string = '';
   p_etb_direcc: string = '';
+
+  p_imgfot : string= '';
+  imagen : string= '';
   
   //p_etb_id: number = 0;
   
@@ -413,7 +415,7 @@ export class CrearPropietarioComponent implements OnInit {
       p_per_numdoi: this.p_tdi_numero
     };
     this.spinner.show();
-    this.sanidadService.listarRecurrente(post).subscribe({
+    this.serviceMaster.ListarPersona(post).subscribe({
       next: (data: any) => {
         if (Object.keys(data).length > 0) {
           this.p_per_id = data[0]['per_id'];
@@ -467,6 +469,7 @@ export class CrearPropietarioComponent implements OnInit {
           this.p_rec_correo = data[0]['pen_correo'];
           this.p_rec_telcel = data[0]['pen_numtel'];
           this.p_rec_direcc = data[0]['dir_direcc'];
+          this.buscarPersonaPide();
           this.spinner.hide();
         } else {
           this.buscarPersonaPide();
@@ -494,6 +497,8 @@ export class CrearPropietarioComponent implements OnInit {
             this.p_rec_apepat = response['apPrimer'];
             this.p_rec_apemat = response['apSegundo'];
             this.p_rec_direcc = response['direccion'];
+            this.imagen = response['foto'];
+            this.imageUrl = 'data:image/png;base64, '+response['foto'];
             this.spinner.hide();
           } else {
             Swal.fire({
