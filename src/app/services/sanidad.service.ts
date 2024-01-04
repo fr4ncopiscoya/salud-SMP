@@ -17,10 +17,30 @@ export class SanidadService {
         })
       );
   }
+  
+  listarPropietario(data: any) {
+    return this.httpClientUtils
+      .postQuery('sanidad/propietariosel', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
 
   guardarRecurrente(data: any) {
     return this.httpClientUtils
       .postQuery('sanidad/recurrente/registrar', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+  
+  guardarPropietario(data: any) {
+    return this.httpClientUtils
+      .postQuery('sanidad/propietarioreg', data)
       .pipe(
         map((data) => {
           return data;

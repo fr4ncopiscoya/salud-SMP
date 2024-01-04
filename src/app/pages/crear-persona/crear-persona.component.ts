@@ -595,7 +595,7 @@ export class CrearPersonaComponent implements OnInit {
                 if (result.error === 0) {
                   Swal.fire({ title: '<h2>Confirmación</h2>', text: result.mensa, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((result) => {
                     if (result.isConfirmed) {
-                      this.router.navigate(['carne']);
+                      this.router.navigate(['persona']);
                     }
                   });
                 }else{
