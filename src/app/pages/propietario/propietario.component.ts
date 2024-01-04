@@ -19,8 +19,8 @@ export class PropietarioComponent implements OnInit {
   dtOptions: any = {  
     columnDefs: [
       { width: '5px', targets: 0 },
-      { width: '310px', targets: 1 },
-      { width: '8px', targets: 2 },
+      { width: '150px', targets: 1 },
+      { width: '320px', targets: 2 },
       { width: '15px', targets: 3 },
     ],
     dom: 'Bfrtip',
@@ -42,7 +42,7 @@ export class PropietarioComponent implements OnInit {
   }
 
   //Variables Globales
-  dataRecurrente:any;
+  dataPropietario:any;
   datosTipoDocumento: any;
   datosTipoGenero: any;
   datosPais: any;
@@ -55,7 +55,9 @@ export class PropietarioComponent implements OnInit {
   p_per_numdoi:string='';
   p_pai_id:number=0;
   p_tge_id:number=0;
+  p_prp_activo:number=9;
   p_pen_apepat:string='';
+  p_per_nombre:string='';
   p_pen_apemat:string='';
   p_rec_activo:string='';
 
@@ -69,10 +71,9 @@ export class PropietarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* this.ListarRecurrente(); */
+    this.ListarPropietario();
     this.listarTipoDocumentoIdentidad();
     this.listarTipoGenero();
-    this.listarPais();
   }
   
   ngOnDestroy(): void {
@@ -88,23 +89,20 @@ export class PropietarioComponent implements OnInit {
     btnExcel.click();
   }
 
-  ListarRecurrente() {
+  ListarPropietario() {
     this.spinner.show();
     const data_post = {
       p_per_id     : this.p_per_id,
       p_tdi_id     : this.p_tdi_id,
       p_per_numdoi : this.p_per_numdoi,
-      p_pai_id     : parseInt(this.selectedPais),
-      p_tge_id     : this.p_tge_id,
-      p_pen_apepat : this.p_pen_apepat,
-      p_pen_apemat : this.p_pen_apemat,
-      p_rec_activo : this.p_rec_activo
+      p_per_nombre : this.p_per_nombre,
+      p_prp_activo : this.p_prp_activo,
     };
 
-    this.serviceSanidad.listarRecurrente(data_post).subscribe({
+    this.serviceSanidad.listarPropietario(data_post).subscribe({
       next: (data: any) => {
         this.spinner.show();
-        this.dataRecurrente = data;
+        this.dataPropietario = data;
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
           this.dtTrigger.next();
@@ -139,18 +137,6 @@ export class PropietarioComponent implements OnInit {
     this.serviceMaster.listarGenero(post).subscribe({
       next: (data: any) => {
         this.datosTipoGenero = data;
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
-  }
-
-  listarPais() {
-    let post = {};
-    this.serviceMaster.listarPais(post).subscribe({
-      next: (data: any) => {
-        this.datosPais = data;
       },
       error: (error: any) => {
         console.log(error);

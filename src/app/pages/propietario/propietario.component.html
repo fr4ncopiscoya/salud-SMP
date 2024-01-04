@@ -40,12 +40,12 @@
                                     <label class="col-form-label">Nombres</label>
                                 </div>
                                 <div class="col-5">
-                                  <input [(ngModel)]="p_pen_apepat" type="text" class="form-control form-control-sm">
+                                  <input [(ngModel)]="p_per_nombre" type="text" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="row pt-3">
                                 <div class="col-sm-auto">
-                                    <button type="button" (click)="ListarRecurrente()" class="btn btn-primary btn-label btn-sm"><i class="ri-search-line label-icon align-middle fs-16 me-2"></i> Buscar</button>
+                                    <button type="button" (click)="ListarPropietario()" class="btn btn-primary btn-label btn-sm"><i class="ri-search-line label-icon align-middle fs-16 me-2"></i> Buscar</button>
                                 </div>
                                 <div class="col-sm-auto">
                                     <button type="button" [routerLink]="['/propietario/crear-propietario']" class="btn btn-info btn-label btn-sm"><i class="mdi mdi-plus label-icon align-middle fs-16 me-2"></i> Nuevo</button>
@@ -79,15 +79,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let data of dataRecurrente;let idx = index"
+                                        <tr *ngFor="let data of dataPropietario;let idx = index"
                                             class="text-center">
                                             <td>{{idx + 1}}</td>
-                                            <td>{{ data.per_nombre }}</td>
-                                            <td>{{ data.tdi_abrevi }}</td>
-                                            <td>{{ data.per_numdoi }}</td>
-                                            <td class="tddirecciondatatable">{{ data.dir_direcc }}</td>
-                                            <td>{{ data.udi_descri }}</td>
-                                            <td>{{ data.pec_correo }}</td>
+                                            <td>{{ data.per_nomcom }}</td>
+                                            <td>{{ data.dir_comple }}</td>
+                                            <td>{{ data.pet_numero }}</td>
+                                            <td class="tddirecciondatatable">{{ data.pec_correo }}</td>
+                                            <td>{{ data.prp_estado }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
