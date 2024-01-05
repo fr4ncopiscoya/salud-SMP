@@ -13,6 +13,7 @@ import { MascotaComponent } from './pages/mascota/mascota.component';
 import { CrearMascotaComponent } from './pages/crear-mascota/crear-mascota.component';
 import { PropietarioComponent } from './pages/propietario/propietario.component';
 import { CrearPropietarioComponent } from './pages/crear-propietario/crear-propietario.component';
+import { AnimalPropietarioComponent } from './pages/animal-propietario/animal-propietario.component';
 
 export const ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
@@ -28,6 +29,7 @@ export const ROUTES: Routes = [
   { path: 'mascota/crear-mascota', component: CrearMascotaComponent },
   { path: 'propietario', component: PropietarioComponent },
   { path: 'propietario/crear-propietario', component: CrearPropietarioComponent },
+  { path: 'animal/animal-propietario/:ani_id', component: AnimalPropietarioComponent },
   
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', pathMatch: 'full', redirectTo: 'login' },
