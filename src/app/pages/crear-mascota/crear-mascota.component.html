@@ -37,6 +37,7 @@
     </div>
 </ng-template>
 <button (click)="openModal(EditarImagen, 'modal-xl')" style="display: none;" id="btnmodalimagen">x</button>
+
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -57,7 +58,7 @@
             <div class="col-xl-12">
                 <div class="card card-h-100">
                     <div class="card-body">
-                            <form >
+                            <form [formGroup]="form">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
@@ -77,11 +78,11 @@
                                                         <div class="col-md-4">
                                                             <div class="form-floating">
                                                                 <select class="form-select"
-                                                                    formControlName="p_tdi_id"
+                                                                    formControlName="esp_id" [(ngModel)]="p_esp_id"
                                                                     data-choices-sorting="true">
                                                                     <option selected="" value="0">Seleccione...</option>
-                                                                    <!-- <option *ngFor="let data of datosTipoDocumento"
-                                                                    value="{{data.tdi_id}}">{{data.tdi_descri}}</option> -->
+                                                                    <option *ngFor="let data of datosTipoEspecie"
+                                                                    value="{{data.esp_id}}">{{data.esp_descri}}</option>
                                                                 </select>
                                                                 <label>Especie</label>
                                                             </div>
@@ -93,11 +94,11 @@
                                                         <div class="col-md-4">
                                                             <div class="form-floating">
                                                                     <select class="form-select"
-                                                                    formControlName="p_tdi_id"
+                                                                    formControlName="p_tdi_id" [(ngModel)]="anr_id" (change)="especiesel()"
                                                                     data-choices-sorting="true">
                                                                     <option selected="" value="0">Seleccione...</option>
-                                                                    <!-- <option *ngFor="let data of datosTipoDocumento"
-                                                                    value="{{data.tdi_id}}">{{data.tdi_descri}}</option> -->
+                                                                    <option *ngFor="let data of datosTipoRaza"
+                                                                    value="{{data.anr_id}}">{{data.anr_descri}}</option>
                                                                 </select>
                                                                     <label>Raza</label>
                                                             </div>
@@ -105,11 +106,11 @@
                                                         <div class="col-md-4">
                                                             <div class="form-floating">
                                                                     <select class="form-select"
-                                                                    formControlName="p_tdi_id"
+                                                                    formControlName="p_tdi_id" [(ngModel)]="p_ans_id"
                                                                     data-choices-sorting="true">
                                                                     <option selected="" value="0">Seleccione...</option>
-                                                                    <!-- <option *ngFor="let data of datosTipoDocumento"
-                                                                    value="{{data.tdi_id}}">{{data.tdi_descri}}</option> -->
+                                                                    <option *ngFor="let data of datosTipoSexo"
+                                                                    value="{{data.ans_id}}">{{data.ans_descri}}</option>
                                                                 </select>
                                                                     <label>Sexo</label>
                                                             </div>
@@ -120,7 +121,7 @@
                                                     <div class="row">
                                                         <div class="col-md-8">
                                                             <div class="form-floating">
-                                                                <input type="text" class="form-control form-control-sm" formControlName="p_rec_apepat">
+                                                                <input [(ngModel)]="p_ani_nombre" type="text" class="form-control form-control-sm" formControlName="p_rec_apepat">
                                                                 <!-- <div
                                                                     *ngIf="form.get('p_rec_apepat')?.invalid && (form.get('p_rec_apepat')?.dirty || form.get('p_rec_apepat')?.touched)">
                                                                     <div class="text-danger"
@@ -132,7 +133,7 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-floating">
-                                                                <input type="number" class="form-control form-control-sm">
+                                                                <input [(ngModel)]="p_ani_edadan" type="number" class="form-control form-control-sm">
                                                                 <div>
                                                                     <!-- <div class="text-danger"
                                                                         *ngIf="form.get('p_rec_nombre')?.hasError('required')">
@@ -148,7 +149,7 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
-                                                                <input type="number" class="form-control form-control-sm">
+                                                                <input [(ngModel)]="p_ani_pesnet" type="number" class="form-control form-control-sm">
                                                                 <label>Peso</label>
                                                             </div>
                                                             <!-- <div
@@ -160,19 +161,19 @@
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
-                                                                <input type="text" class="form-control form-control-sm" >
+                                                                <input [(ngModel)]="p_ani_canpat" type="text" class="form-control form-control-sm" >
                                                                 <label>Patas</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
-                                                                <input type="text" class="form-control form-control-sm">
+                                                                <input [(ngModel)]="p_ani_tamalt" type="text" class="form-control form-control-sm">
                                                                 <label>Alto</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
-                                                                <input type="text" class="form-control form-control-sm">
+                                                                <input [(ngModel)]="p_ani_tamlar" type="text" class="form-control form-control-sm">
                                                                 <label>Largo</label>
                                                             </div>
                                                         </div>
@@ -246,7 +247,7 @@
                                             <div class="col-md-12 mt-2">
                                                     <div class="row">
                                                         <div class="text-end">
-                                                            <button type="button" class="btn btn-primary" style="margin-right: 5px;"> <i class=""></i>Guardar</button>
+                                                            <button (click)="animalreg()" type="button" class="btn btn-primary" style="margin-right: 5px;"> <i class=""></i>Guardar</button>
                                                             <button type="button" class="btn btn-danger" [routerLink]="['/persona']">Cancelar</button>
                                                         </div>
                                                     </div>

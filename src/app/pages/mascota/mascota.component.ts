@@ -42,6 +42,8 @@ export class MascotaComponent implements OnInit {
 
   //Variables Globales
   dataAnimal: any;
+  datosTipoSexo: any;
+  datosTipoEspecie: any;
   // datosTipoDocumento: any;
   // datosTipoGenero: any;
   // datosPais: any;
@@ -57,27 +59,64 @@ export class MascotaComponent implements OnInit {
   p_esr_activo: number = 9;
 
   animalsel() {
-    this.spinner.show();
-    const data_post = {
-      p_ani_id: this.p_ani_id,
-      p_esr_id: this.p_esr_id,
-      p_esp_id: this.p_esp_id,
-      p_anr_id: this.p_anr_id,
-      p_ans_id: this.p_ans_id,
-      p_esr_activo: this.p_esr_activo,
-    };
+    let post = {
+      // p_ani_id: 0,
+      // p_esp_id: 0,
+      // p_anr_id: 0,
+      // p_ans_id: 0,
+      // p_ani_nombre: '',
+      // p_ani_codigo: '',
+      // p_ani_pesnet: 0,
+      // p_ani_canpat: 0,
+      // p_ani_tamalt: 0,
+      // p_ani_tamlar: 0,
+      // p_ani_numojo: 0,
+      // p_ani_edadan: 0,
+      // p_ani_muerto: 0,
+      // p_ani_imgfot: '',
 
-    this.serviceSanidad.animalsel(data_post).subscribe({
+      p_ani_id: 0,
+      p_esr_id: 0,
+      p_esp_id: 0,
+      p_anr_id: 0,
+      p_ans_id: 0,
+      p_esr_activo: 9,
+    };
+    this.sanidadService.animalsel(post).subscribe({
       next: (data: any) => {
-        this.spinner.show();
         this.dataAnimal = data;
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.dtTrigger.next();
-        });
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000);
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
+  especiesel() {
+    let post = {
+      p_esp_id: 0,
+      p_esp_descri: '',
+      p_esp_activo: 9,
+    };
+    this.sanidadService.especiesel(post).subscribe({
+      next: (data: any) => {
+        this.datosTipoEspecie = data;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
+  animalsexosel() {
+    let post = {
+      p_ans_id: 0,
+      p_ans_descri: '',
+      p_ans_activo: 9,
+    };
+    this.sanidadService.animalsexosel(post).subscribe({
+      next: (data: any) => {
+        this.datosTipoSexo = data;
       },
       error: (error: any) => {
         console.log(error);
@@ -91,7 +130,8 @@ export class MascotaComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private serviceSanidad: SanidadService
+    private serviceSanidad: SanidadService,
+    private sanidadService: SanidadService
   ) {
     this.appComponent.login = false;
   }
@@ -105,6 +145,8 @@ export class MascotaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.animalsel();
+    this.animalsel();
+    this.especiesel();
+    this.animalsexosel();
   }
 }

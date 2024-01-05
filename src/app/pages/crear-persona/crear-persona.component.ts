@@ -569,6 +569,11 @@ export class CrearPersonaComponent implements OnInit {
 
         var p_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
         console.log(p_imgext);
+
+        // let post = {
+        //   p_per_id: this.p_per_id,
+
+        // }
   
         dataPost.append('p_per_id',p_per_id.toString());
         dataPost.append('p_tdi_id',p_tdi_id.toString());

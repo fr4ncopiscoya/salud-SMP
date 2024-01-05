@@ -137,6 +137,14 @@ export class SanidadService {
 
   //MASCOTAS
 
+  animalreg(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/animalreg', data).pipe(
+      map((data) => {
+        return data;
+      })
+    );
+  }
+
   animalsel(data: any) {
     return this.httpClientUtils.postQuery('sanidad/animalsel', data).pipe(
       map((data) => {
@@ -145,44 +153,27 @@ export class SanidadService {
     );
   }
 
-  BuscarRecibo(data: any) {
-    return this.httpClientUtils.postQuery('sanidad/apirecibosel', data).pipe(
-        map(data => {
-            return data;
-        })
+  especiesel(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/especiesel', data).pipe(
+      map((data) => {
+        return data;
+      })
     );
   }
 
-  AnularCarnet(data: any) {
-    return this.httpClientUtils.postQuery('sanidad/AnularCarnet', data).pipe(
-        map(data => {
-            return data;
-        })
+  animalsexosel(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/animalsexosel', data).pipe(
+      map((data) => {
+        return data;
+      })
     );
   }
 
-  AnularCertificado(data: any) {
-    return this.httpClientUtils.postQuery('sanidad/AnularCertificado', data).pipe(
-        map(data => {
-            return data;
-        })
+  especierazasel(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/especierazasel', data).pipe(
+      map((data) => {
+        return data;
+      })
     );
   }
-
-  SendCorreoCarnet(data: any) {
-    return this.httpClientUtils.postQuery('sanidad/ProcesoEnvioCorreoCarnet', data).pipe(
-        map(data => {
-            return data;
-        })
-    );
-  }
-
-  SendCorreoCertificado(data: any) {
-    return this.httpClientUtils.postQuery('sanidad/ProcesoEnvioCorreoCertificado', data).pipe(
-        map(data => {
-            return data;
-        })
-    );
-  }
-    
 }

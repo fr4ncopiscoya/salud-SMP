@@ -26,8 +26,8 @@
                                     <select class="form-select form-select-sm"
                                         data-choices-sorting="true">
                                         <option selected="" value="0">Seleccione...</option>
-                                        <!-- <option *ngFor="let data of datosTipoDocumento"
-                                            value="{{data.tdi_id}}">{{data.tdi_abrevi}}</option> -->
+                                        <option *ngFor="let data of datosTipoEspecie"
+                                            value="{{data.esp_id}}">{{data.esp_descri}}</option>
                                     </select>
                                 </div>
                                 <div class="col-1">
@@ -40,7 +40,7 @@
                                         <!-- <option *ngFor="let data of datosTipoGenero"
                                             value="{{data.tge_id}}">{{data.tge_descri}}</option> -->
                                     </select>
-                                </div>
+                                </div> 
                                 <div class="col-1">
                                     <label class="col-form-label">SEXO:</label>
                                 </div>
@@ -51,8 +51,8 @@
                                      <select class="form-select form-select-sm"
                                         data-choices-sorting="true">
                                         <option selected="" value="0">Seleccione...</option>
-                                        <!-- <option *ngFor="let data of datosTipoGenero"
-                                            value="{{data.tge_id}}">{{data.tge_descri}}</option> -->
+                                        <option *ngFor="let data of datosTipoSexo"
+                                            value="{{data.ans_id}}">{{data.ans_descri}}</option>
                                     </select>
                                 </div>
                                 <div class="col-1">
@@ -120,9 +120,9 @@
                                             <td>{{ data.esp_descri }}</td>
                                             <td>{{ data.anr_id }}</td>
                                             <td>{{ data.ani_nombre }}</td>
-                                            <td class="tddirecciondatatable">{{ data.dir_direcc }}</td>
-                                            <td>{{ data.udi_descri }}</td>
-                                            <td>{{ data.pec_correo }}</td>
+                                            <td>{{ data.ans_descri }}</td>
+                                            <td>{{ data.ani_edadan }}</td>
+                                            <td>{{ data.ani_estado }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
