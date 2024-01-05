@@ -60,6 +60,7 @@ export class CertificadoComponent implements OnInit {
   datosOcupacion: any;
 
   carneimg: string = '';
+  p_mensaload: string = 'Buscando información...';
 
   //Listado de Persona
   selectedPais: string = '';
@@ -271,4 +272,84 @@ export class CertificadoComponent implements OnInit {
     }
   }
 
+  SendCorreoCertificado(data:any){
+    var p_cer_id = data.cer_id;
+    var p_cer_correo = data.cer_correo;
+    this.p_mensaload = 'Enviando correo ...';
+
+    const data_post = {
+      p_cer_id: p_cer_id,
+    };
+
+    Swal.fire({
+      title: '<b>Confirmación</b>',
+      text: "¿Estás seguro de enviar el archivo al correo "+ p_cer_correo +"?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.spinner.show();
+          this.serviceSanidad.SendCorreoCertificado(data_post).subscribe({
+            next: (data: any) => {
+              console.log(data);
+              if (data.res_cod == '000') {
+                Swal.fire({ title: '<h2>Confirmación</h2>', text: 'Certificado enviado correctamente al correo '+p_cer_correo, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate(['certificado']);
+                  }
+                });
+              }else{
+                Swal.fire('Error al enviar Correo', 'Verifique los datos', 'error')
+              }
+              this.spinner.hide();
+              this.p_mensaload = 'Buscando información...';
+            },
+            error: (error: any) => {
+              console.log(error);
+            }
+          });
+      }
+    })    
+  }
+
+  AnularCertificado(cer_id:number){
+
+    const data_post = {
+      p_cer_id: cer_id,
+    };
+
+    Swal.fire({
+      title: '<b>Confirmación</b>',
+      text: "¿Estás seguro de Anular el Certificado?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          this.serviceSanidad.AnularCertificado(data_post).subscribe({
+            next: (data: any) => {
+              if (data[0].error == 0) {
+                Swal.fire({ title: '<h2>Confirmación</h2>', text: data[0].mensa, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((data) => {
+                  if (data.isConfirmed) {
+                    window.location.reload();
+                  }
+                });
+              }else{
+                Swal.fire(data.mensa, 'Verifique los datos', 'error')
+              }
+            },
+            error: (error: any) => {
+              console.log(error);
+            }
+          });
+      }
+    })
+  }
 }

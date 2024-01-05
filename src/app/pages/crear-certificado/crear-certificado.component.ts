@@ -50,6 +50,11 @@ export class CrearCertificadoComponent implements OnInit {
   pen_apemat: String = " ";
   rec_direcc: String = "";
   rec_correo: String = "";
+  nom_img_temp: string = '';
+  p_rec_monto: string = '0.00';
+  p_rec_fecrec: string = '';
+  p_etb_descri: string = '';
+  p_etb_id: Number = 0;
 
   //DATOS FORMULARIO
   p_cer_id: string = '0';
@@ -77,6 +82,7 @@ export class CrearCertificadoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setTodayDate();
     this.listarOcupacion();
     this.listarTipoDocumentoIdentidad();
     this.listarRubro();
@@ -231,6 +237,17 @@ export class CrearCertificadoComponent implements OnInit {
             this.pen_nombre = result['pen_nombre'];
             this.pen_apepat = result['pen_apepat'];
             this.pen_apemat = result['pen_apemat'];
+            this.p_cer_direcc = result['dir_direcc'];
+            this.p_cer_correo = result['pec_correo'];
+            this.nom_img_temp = result['rec_imgfot'];
+            this.p_etb_id = result['etb_id'];
+            this.p_etb_descri = result['etb_nombre'];
+
+            setTimeout(() => {
+              this.p_act_id = result['act_id'];
+              this.p_ocu_id = result['ocu_id'];
+            }, 500);
+            this.imageUrl= 'http://172.17.1.56/files/salud/'+data[0]['rec_imgfot'];
             /* this.p_cer_direcc = result['rec_direcc'];
             this.p_cer_correo = result['rec_correo']; */
             this.spinner.hide();
@@ -272,6 +289,7 @@ export class CrearCertificadoComponent implements OnInit {
         var p_cer_imgfot = this.p_cer_imgfot;
         var p_cer_imgext = p_cer_imgfot.slice(((p_cer_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
         var p_tdi_id = this.p_tdi_id;
+        var p_etb_id = this.p_etb_id;
         var p_per_numdoi = this.p_per_numdoi;
   
         dataPost.append('p_cer_id',p_cer_id);
@@ -292,9 +310,48 @@ export class CrearCertificadoComponent implements OnInit {
         dataPost.append('p_cer_imgext',p_cer_imgext);
         dataPost.append('p_tdi_id',p_tdi_id.toString());
         dataPost.append('p_per_numdoi',p_per_numdoi.toString());
+        dataPost.append('p_etb_id',p_etb_id.toString());
   
       } else {
-        console.error('No se ha seleccionado ningún archivo.');
+
+        var p_cer_id = this.p_cer_id;
+        var p_per_id = this.p_per_id;
+        var p_act_id = this.p_act_id;
+        var p_ocu_id = this.p_ocu_id;
+        var p_udi_id = 1315;
+        var p_emp_id = this.p_emp_id;
+        var p_cer_direcc = this.p_cer_direcc;
+        var p_cer_correo = this.p_cer_correo;
+        var p_cer_manali = this.utils.setBooleanToInteger(this.p_cer_manali);
+        var p_cer_fecemi = this.p_cer_fecemi;
+        var p_cer_numrec = this.utils.convertirNumeroceroIZQ(this.p_cer_numrec, 13);
+        var p_emp_numruc = this.p_ruc;
+        var p_emp_nomrso = this.p_razon_social;
+        var p_cer_imgfot = this.p_cer_imgfot;
+        var p_cer_imgext = p_cer_imgfot.slice(((p_cer_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
+        var p_tdi_id = this.p_tdi_id;
+        var p_per_numdoi = this.p_per_numdoi;
+        var nom_img_temp = this.nom_img_temp;
+        var p_etb_id = this.p_etb_id;
+
+        dataPost.append('p_cer_id',p_cer_id);
+        dataPost.append('p_per_id',p_per_id);
+        dataPost.append('p_act_id',p_act_id);
+        dataPost.append('p_ocu_id',p_ocu_id);
+        dataPost.append('p_udi_id',p_udi_id.toString());
+        dataPost.append('p_emp_id',p_emp_id);
+        dataPost.append('p_cer_direcc',p_cer_direcc);
+        dataPost.append('p_cer_correo',p_cer_correo.toString());
+        dataPost.append('p_cer_manali',p_cer_manali.toString());
+        dataPost.append('p_cer_fecemi',p_cer_fecemi);
+        dataPost.append('p_cer_numrec',p_cer_numrec);
+        dataPost.append('p_emp_numruc',p_emp_numruc);
+        dataPost.append('p_emp_nomrso',p_emp_nomrso);
+        dataPost.append('p_cer_imgfot',p_cer_imgfot);
+        dataPost.append('p_etb_id',p_etb_id.toString());
+
+        dataPost.append('nom_img_temp',nom_img_temp);
+
       }
   
       Swal.fire({
@@ -333,6 +390,13 @@ export class CrearCertificadoComponent implements OnInit {
       })
     }
 
+  }
+
+  setTodayDate() {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+
+    this.p_cer_fecemi = formattedDate;
   }
 
   //FUNCIONES PARA MODAL
@@ -455,5 +519,42 @@ export class CrearCertificadoComponent implements OnInit {
   GuardarCambiosImagen() {
     this.imageUrl = this.croppedImage;
     this.cerrarModal();
+  }
+
+  validarNumero(event: any): void {
+    const keyCode = event.keyCode;
+    if (keyCode < 48 || keyCode > 57) {
+      event.preventDefault();
+    }
+  }
+
+  buscarRecibo(){
+    if(this.p_cer_numrec.length <= 12 || this.p_cer_numrec.length >= 14){
+      Swal.fire('Ingresar número de Recibo válido', 'Vuelva a intentarlo', 'error');
+      this.p_cer_numrec = '';
+      this.p_rec_fecrec = '';
+      this.p_rec_monto = '';
+    }else{
+      let post = {
+        numrec: this.p_cer_numrec,
+        tiprec: 2
+      };
+      this.serviceSanidad.BuscarRecibo(post).subscribe({
+        next: (data: any) => {
+          if (data.length > 0) {
+            this.p_rec_fecrec=data[0]['fecrec'];
+            this.p_rec_monto='S/. ' + data[0]['monrec'];
+          }else{
+            Swal.fire('RECIBO NO VALIDO PARA EMISIÓN DE CARNET DE SANIDAD', 'Vuelva a intentarlo', 'error');
+            this.p_cer_numrec = '';
+            this.p_rec_fecrec = '';
+            this.p_rec_monto = '';
+          }
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
+    }
   }
 }

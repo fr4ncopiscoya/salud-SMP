@@ -105,6 +105,7 @@ export class CrearPersonaComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = 'assets/images/avatardefault_92824.png';
   textoimagenurl: any = 'assets/images/avatardefault_92824.png';
+  nom_img_temp: string = '';
 
   constructor(private appComponent: AppComponent
     , private serviceMaster: MasterService
@@ -425,20 +426,33 @@ export class CrearPersonaComponent implements OnInit {
           if(data[0]['rec_telcel'] == "null"){
             this.p_rec_telcel = '';
           }else{
-            this.p_rec_telcel = data[0]['rec_telcel'];
+            this.p_rec_telcel = data[0]['pet_numero'];
           }
           this.p_rec_direcc = data[0]['dir_direcc'];
+
+          this.nom_img_temp = data[0]['rec_imgfot'];
+
+          this.imageUrl= 'http://172.17.1.56/files/salud/recurrente/'+data[0]['rec_imgfot'];
+
+          this.p_etb_direcc = data[0]['etb_direcc'];
+          
           this.p_pai_id = data[0]['pai_id'];
           this.p_ude_id = data[0]['ude_id'];
+          
+          (<HTMLInputElement>document.getElementById('datoRubro')).value = data[0]['act_descri'];
+          (<HTMLInputElement>document.getElementById('datoOcupacion')).value = data[0]['ocu_descri'];
+          (<HTMLInputElement>document.getElementById('datoEstablecimientos')).value = data[0]['etb_nombre'];
+
           setTimeout(() => {
             this.listarProvincias();
             this.p_upr_id = data[0]['upr_id'];
             setTimeout(() => {
               this.listarDistritos();
               this.p_udi_id = data[0]['udi_id'];
-            }, 1000);
-          }, 1000);
+            }, 3000);
+          }, 1500);
           this.spinner.hide();
+
         } else {
           this.buscarPersona();
         }
@@ -514,6 +528,14 @@ export class CrearPersonaComponent implements OnInit {
 
     if(this.p_tdi_numero.length < 6 || this.p_per_id == 0){
       Swal.fire('Ingresar número de documento válido', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_rec_direcc == ''){
+      Swal.fire('Ingresar una dirección válida', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_rec_telcel == ''){
+      Swal.fire('Ingresar un número telefónico válido', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_rec_correo == ''){
+      Swal.fire('Ingresar un número telefónico válido', 'Vuelva a intentarlo', 'error');
+    }else if(this.p_imgfot == ''){
+      Swal.fire('Ingresar imagen de Persona', 'Vuelva a intentarlo', 'error');
     }else{
       const dataPost = new FormData();
       if (this.imagenrecort) {
@@ -543,6 +565,7 @@ export class CrearPersonaComponent implements OnInit {
         var p_ocu_nombre = datoOcupacion;
         var p_imgfot = this.p_imgfot;
         var p_etb_manali = this.p_manali;
+        var nom_img_temp = this.nom_img_temp;
 
         var p_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
         console.log(p_imgext);
@@ -554,7 +577,7 @@ export class CrearPersonaComponent implements OnInit {
         dataPost.append('p_rec_apemat',p_rec_apemat);
         dataPost.append('p_rec_nombre',p_rec_nombre);
         dataPost.append('p_tge_id',p_tge_id.toString());
-        dataPost.append('p_rec_correo',p_rec_correo.toString());
+        dataPost.append('p_rec_correo',p_rec_correo);
         dataPost.append('p_rec_telfij',p_rec_telfij);
         dataPost.append('p_rec_telcel',p_rec_telcel);
         dataPost.append('p_pai_id',p_pai_id.toString());
@@ -569,13 +592,67 @@ export class CrearPersonaComponent implements OnInit {
         dataPost.append('p_ocu_nombre',p_ocu_nombre);
         dataPost.append('p_etb_manali',p_etb_manali.toString());
         dataPost.append('p_imgfot',p_imgfot);
+        dataPost.append('nom_img_temp','');
 
         dataPost.append('p_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);
         dataPost.append('p_imgext',p_imgext);
         dataPost.append('p_tdi_numero',p_tdi_numero.toString());
   
       } else {
-        console.error('No se ha seleccionado ningún archivo.');
+        var datoEstablecimiento = (<HTMLInputElement>document.getElementById("datoEstablecimientos")).value;
+        var datoRubro = (<HTMLInputElement>document.getElementById("datoRubro")).value;
+        var datoOcupacion = (<HTMLInputElement>document.getElementById("datoOcupacion")).value;
+
+        var p_per_id = this.p_per_id;
+        var p_tdi_id = this.p_tdi_id;
+        var p_tdi_numero = this.p_tdi_numero;
+        var p_rec_apepat = this.p_rec_apepat;
+        var p_rec_apemat = this.p_rec_apemat;
+        var p_rec_nombre = this.p_rec_nombre;
+        var p_tge_id = this.p_tge_id;
+        var p_rec_correo = this.p_rec_correo;
+        var p_rec_telfij = '';
+        var p_rec_telcel = this.p_rec_telcel;
+        var p_pai_id = this.p_pai_id;
+        var p_udi_id = this.p_udi_id;
+        var p_rec_direcc = this.p_rec_direcc;
+        var p_etb_id = this.p_etb_id;
+        var p_etb_nombre = datoEstablecimiento;
+        var p_etb_direcc = this.p_etb_direcc;
+        var p_act_id = this.p_act_id;
+        var p_act_nombre = datoRubro;
+        var p_ocu_id = this.p_ocu_id;
+        var p_ocu_nombre = datoOcupacion;
+        var p_imgfot = this.p_imgfot;
+
+        var nom_img_temp = this.nom_img_temp;
+
+        var p_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
+        console.log(p_imgext);
+
+        dataPost.append('p_per_id',p_per_id.toString());
+        dataPost.append('p_tdi_id',p_tdi_id.toString());
+        dataPost.append('p_tdi_numero',p_tdi_numero);
+        dataPost.append('p_rec_apepat',p_rec_apepat);
+        dataPost.append('p_rec_apemat',p_rec_apemat);
+        dataPost.append('p_rec_nombre',p_rec_nombre);
+        dataPost.append('p_tge_id',p_tge_id.toString());
+        dataPost.append('p_rec_correo',p_rec_correo);
+        dataPost.append('p_rec_telfij',p_rec_telfij);
+        dataPost.append('p_rec_telcel',p_rec_telcel);
+        dataPost.append('p_pai_id',p_pai_id.toString());
+        dataPost.append('p_udi_id',p_udi_id.toString());
+        dataPost.append('p_rec_direcc',p_rec_direcc);
+        dataPost.append('p_etb_id',p_etb_id);
+        dataPost.append('p_etb_nombre',p_etb_nombre);
+        dataPost.append('p_etb_direcc',p_etb_direcc);
+        dataPost.append('p_act_id',p_act_id);
+        dataPost.append('p_act_nombre',p_act_nombre);
+        dataPost.append('p_ocu_id',p_ocu_id);
+        dataPost.append('p_ocu_nombre',p_ocu_nombre);
+        dataPost.append('p_imgfot',p_imgfot);
+        dataPost.append('nom_img_temp',nom_img_temp);
+        dataPost.append('p_tdi_numero',p_tdi_numero.toString());
       }
       Swal.fire({
         title: '<b>Confirmación</b>',

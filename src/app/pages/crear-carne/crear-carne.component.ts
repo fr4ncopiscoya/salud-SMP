@@ -57,6 +57,9 @@ export class CrearCarneComponent implements OnInit {
   confsinomanali: string = '';
   p_car_fecemi: string = '';
   p_car_numrec: string = '';
+  p_rec_fecrec: string = '';
+  nom_img_temp: string = '';
+  p_rec_monto: string = '0.00';
 
   showImageColumn: boolean = false;
   firstcolumn: string = '4';
@@ -64,7 +67,6 @@ export class CrearCarneComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = 'assets/images/avatardefault_92824.png';
-
   textoimagenurl: any = 'assets/images/avatardefault_92824.png';
 
   constructor(private appComponent: AppComponent,
@@ -76,6 +78,7 @@ export class CrearCarneComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setTodayDate();
     this.listarTipoDocumentoIdentidad();
     this.listarOcupacion();
     this.listarRubro();
@@ -124,6 +127,13 @@ export class CrearCarneComponent implements OnInit {
     this.cerrarModal();
   }
 
+  setTodayDate() {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+
+    this.p_car_fecemi = formattedDate;
+  }
+
   guardarCarne() {
     if(this.p_per_numdoi.length < 6 || this.p_per_id == ''){
       Swal.fire('Ingresar número de documento válido', 'Vuelva a intentarlo', 'error');
@@ -141,7 +151,8 @@ export class CrearCarneComponent implements OnInit {
         var p_car_manali = this.utils.setBooleanToInteger(this.p_car_manali);
         var p_car_fecemi = this.p_car_fecemi;
         var p_car_numrec = this.utils.convertirNumeroceroIZQ(this.p_car_numrec, 13);
-        
+        var nom_img_temp = this.nom_img_temp;
+
         var p_car_imgfot = this.p_car_imgfot;
         var p_car_imgext = p_car_imgfot.slice(((p_car_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
         var p_tdi_id = this.p_tdi_id;
@@ -157,6 +168,9 @@ export class CrearCarneComponent implements OnInit {
         dataPost.append('p_car_manali',p_car_manali.toString());
         dataPost.append('p_car_fecemi',p_car_fecemi);
         dataPost.append('p_car_numrec',p_car_numrec);
+        dataPost.append('p_car_imgfot',p_car_imgfot);
+
+        dataPost.append('nom_img_temp','');
 
         dataPost.append('p_car_imgfot',p_car_imgfot);
         dataPost.append('p_car_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);
@@ -165,8 +179,37 @@ export class CrearCarneComponent implements OnInit {
         dataPost.append('p_per_numdoi',p_per_numdoi.toString());
   
       } else {
-        console.error('No se ha seleccionado ningún archivo.');
+        var p_car_id = '0';
+        var p_per_id = this.p_per_id;
+        var p_act_id = this.p_act_id;
+        var p_ocu_id = this.p_ocu_id;
+        var p_udi_id = '1315';
+        var p_car_direcc = this.p_car_direcc;
+        var p_car_correo = this.p_car_correo;
+        var p_car_manali = this.utils.setBooleanToInteger(this.p_car_manali);
+        var p_car_fecemi = this.p_car_fecemi;
+        var p_car_numrec = this.utils.convertirNumeroceroIZQ(this.p_car_numrec, 13);
+        var nom_img_temp = this.nom_img_temp;
+
+        var p_car_imgfot = this.p_car_imgfot;
+
+        dataPost.append('p_car_id',p_car_id);
+        dataPost.append('p_per_id',p_per_id);
+        dataPost.append('p_act_id',p_act_id);
+        dataPost.append('p_ocu_id',p_ocu_id);
+        dataPost.append('p_udi_id',p_udi_id);
+        dataPost.append('p_car_direcc',p_car_direcc);
+        dataPost.append('p_car_correo',p_car_correo);
+        dataPost.append('p_car_manali',p_car_manali.toString());
+        dataPost.append('p_car_fecemi',p_car_fecemi);
+        dataPost.append('p_car_numrec',p_car_numrec);
+        dataPost.append('p_car_imgfot',p_car_imgfot);
+
+        dataPost.append('nom_img_temp',nom_img_temp);
       }
+      
+      console.log(dataPost);
+      
       Swal.fire({
         title: '<b>Confirmación</b>',
         text: "¿Estás seguro de guardar la información?",
@@ -344,13 +387,23 @@ export class CrearCarneComponent implements OnInit {
             this.pen_apepat = result['pen_apepat'];
             this.pen_apemat = result['pen_apemat'];
             
-            this.imageUrl= 'http://172.17.1.56/files/salud/'+data[0]['rec_imgfot'];
+            this.p_car_direcc = result['etb_direcc'];
+            this.p_car_correo = result['pec_correo'];
+
+            this.nom_img_temp = result['rec_imgfot'];
+
+            setTimeout(() => {
+              this.p_act_id = result['act_id'];
+              this.p_ocu_id = result['ocu_id'];
+            }, 500);
+            
+            this.imageUrl= 'http://172.17.1.56/files/salud/recurrente/'+data[0]['rec_imgfot'];
 
             this.showImageColumn = true;
             this.firstcolumn = '4';
             this.secondcolumn = '8';
             
-            this.p_car_direcc = result['pec_direcc'];
+            this.p_car_direcc = result['etb_direcc'];
             this.p_car_correo = result['pec_correo'];
           }else{
             Swal.fire('No se encontraron resultados', 'Vuelva a intentarlo', 'error');
@@ -398,6 +451,43 @@ export class CrearCarneComponent implements OnInit {
         fileInput.value = ''; // Esto restablecerá el valor del input file
         this.imageUrl = this.textoimagenurl;
       }
+    }
+  }
+
+  validarNumero(event: any): void {
+    const keyCode = event.keyCode;
+    if (keyCode < 48 || keyCode > 57) {
+      event.preventDefault();
+    }
+  }
+
+  buscarRecibo(){
+    if(this.p_car_numrec.length <= 12 || this.p_car_numrec.length >= 14){
+      Swal.fire('Ingresar número de Recibo válido', 'Vuelva a intentarlo', 'error');
+      this.p_car_numrec = '';
+      this.p_rec_fecrec = '';
+      this.p_rec_monto = '';
+    }else{
+      let post = {
+        numrec: this.p_car_numrec,
+        tiprec: 1
+      };
+      this.serviceSanidad.BuscarRecibo(post).subscribe({
+        next: (data: any) => {
+          if (data.length > 0) {
+            this.p_rec_fecrec=data[0]['fecrec'];
+            this.p_rec_monto='S/. ' + data[0]['monrec'];
+          }else{
+            Swal.fire('RECIBO NO VALIDO PARA EMISIÓN DE CARNET DE SANIDAD', 'Vuelva a intentarlo', 'error');
+            this.p_car_numrec = '';
+            this.p_rec_fecrec = '';
+            this.p_rec_monto = '';
+          }
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
     }
   }
 

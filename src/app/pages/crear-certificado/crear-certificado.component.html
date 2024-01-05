@@ -97,20 +97,20 @@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="p_cer_numrec">
+                                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="p_cer_numrec" (blur)="buscarRecibo()" (keypress)="validarNumero($event)">
                                                         <label for="firstnamefloatingInput">Recibo</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-floating">
-                                                        <input type="date" class="form-control" placeholder="">
+                                                        <input type="date" class="form-control" placeholder="" [(ngModel)]="p_rec_fecrec" style="background: #ebf0f5;" disabled>
                                                         <label>Fecha de Recibo</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-floating">
-                                                        <input type="date" class="form-control" placeholder="" [(ngModel)]="p_cer_fecemi">
-                                                        <label>Fecha de Emision</label>
+                                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="p_rec_monto" style="background: #ebf0f5;" disabled>
+                                                        <label>Monto</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -150,32 +150,25 @@
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" [(ngModel)]="p_ruc" (blur)="buscarPersonaJuridica()">
-                                                        <label>RUC</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating">
-                                                        <input type="text" class="form-control input-disabled" [(ngModel)]="p_razon_social" style="background-color: #fafdff;" readonly>
-                                                        <label>Empresa</label>
+                                                        <input type="text" class="form-control input-disabled" [(ngModel)]="p_etb_descri" style="background-color: #ebf0f5;" readonly>
+                                                        <label>Establecimiento</label>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="p_cer_direcc">
+                                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="p_cer_direcc" style="background: #ebf0f5;" disabled>
                                                         <label>Dirección</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="p_cer_correo">
+                                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="p_cer_correo" style="background: #ebf0f5;" disabled>
                                                         <label>Email</label>
                                                     </div>
                                                 </div>
@@ -185,13 +178,13 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <ng-select class="custom-ng-select" [(ngModel)]="p_act_id" [items]="datosRubro" placeholder="Seleccione" bindLabel="act_descri" bindValue="act_id" style="border: 1px solid #b9b9b9 !important;"></ng-select>
+                                                        <ng-select class="custom-ng-select" [(ngModel)]="p_act_id" [items]="datosRubro" placeholder="Seleccione" bindLabel="act_descri" bindValue="act_id" style="border: 1px solid #b9b9b9 !important;" disabled></ng-select>
                                                         <label>Rubro / Giro</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <ng-select class="custom-ng-select" [(ngModel)]="p_ocu_id" [items]="datosOcupacion" placeholder="Seleccione" bindLabel="ocu_descri" bindValue="ocu_id" style="border: 1px solid #b9b9b9 !important;"></ng-select>
+                                                        <ng-select class="custom-ng-select" [(ngModel)]="p_ocu_id" [items]="datosOcupacion" placeholder="Seleccione" bindLabel="ocu_descri" bindValue="ocu_id" style="border: 1px solid #b9b9b9 !important;" disabled></ng-select>
                                                         <label>Ocupación</label>
                                                     </div>
                                                 </div>

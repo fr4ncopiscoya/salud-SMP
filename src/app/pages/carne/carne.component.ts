@@ -7,7 +7,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-carne',
@@ -72,6 +72,8 @@ export class CarneComponent implements OnInit {
   p_car_fecini: string = '';
   p_car_fecfin: string = '';
   p_car_activo: string = '';
+
+  p_mensaload: string = 'Buscando información...';
 
   constructor(private modalService: BsModalService, private appComponent: AppComponent
     , private serviceMaster: MasterService
@@ -232,6 +234,87 @@ export class CarneComponent implements OnInit {
     } else {
       console.error('No se encontró el elemento con el ID "contenido-a-convertir".');
     }
+  }
+
+  SendCorreoCarnet(data:any){
+    var p_car_id = data.car_id;
+    var p_car_correo = data.car_correo;
+    this.p_mensaload = 'Enviando correo ...';
+
+    const data_post = {
+      p_car_id: p_car_id,
+    };
+
+    Swal.fire({
+      title: '<b>Confirmación</b>',
+      text: "¿Estás seguro de enviar el archivo al correo "+ p_car_correo +"?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.spinner.show();
+          this.serviceSanidad.SendCorreoCarnet(data_post).subscribe({
+            next: (data: any) => {
+              console.log(data);
+              if (data.res_cod == '000') {
+                Swal.fire({ title: '<h2>Confirmación</h2>', text: 'Carnet enviado correctamente al correo '+p_car_correo, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate(['carne']);
+                  }
+                });
+              }else{
+                Swal.fire('Error al enviar Correo', 'Verifique los datos', 'error')
+              }
+              this.spinner.hide();
+              this.p_mensaload = 'Buscando información...';
+            },
+            error: (error: any) => {
+              console.log(error);
+            }
+          });
+      }
+    })    
+  }
+
+  AnularCarnet(car_id:number){
+
+    const data_post = {
+      p_car_id: car_id,
+    };
+
+    Swal.fire({
+      title: '<b>Confirmación</b>',
+      text: "¿Estás seguro de Anular el Carnet?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          this.serviceSanidad.AnularCarnet(data_post).subscribe({
+            next: (data: any) => {
+              if (data[0].error == 0) {
+                Swal.fire({ title: '<h2>Confirmación</h2>', text: data[0].mensa, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((data) => {
+                  if (data.isConfirmed) {
+                    window.location.reload();
+                  }
+                });
+              }else{
+                Swal.fire(data.mensa, 'Verifique los datos', 'error')
+              }
+            },
+            error: (error: any) => {
+              console.log(error);
+            }
+          });
+      }
+    })
   }
 
 }

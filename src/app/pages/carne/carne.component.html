@@ -126,7 +126,11 @@
                                             <td>{{ data.car_fecemi }}</td>
                                             <td>{{ data.car_fecven }}</td>
                                             <td>{{ data.car_estado }}</td>
-                                            <td><button type="button" (click)="openModalWithClass(Imprimir,data)" class="btn btn-primary btn-sm"><i class="bi bi-eye fs-10"></i></button></td>
+                                            <td>
+                                                <button type="button" *ngIf="data.car_estado == 'ACTIVO'" (click)="openModalWithClass(Imprimir,data)" class="btn btn-primary btn-sm"><i class="bi bi-eye fs-10"></i></button>
+                                                <button type="button" *ngIf="data.car_estado == 'ACTIVO' && data.car_correo !== null" (click)="SendCorreoCarnet(data)" class="btn btn-success btn-sm"><i class="ri ri-mail-line fs-10" ></i></button>
+                                                <button type="button" *ngIf="data.car_estado == 'ACTIVO'" (click)="AnularCarnet(data.car_id)" class="btn btn-danger btn-sm"><i class="ri ri-close-circle-line fs-10"></i></button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -140,6 +144,6 @@
 </div>
 
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-square-spin" [fullScreen]="false">
-    <p style="color: white"> Buscando información... </p>
+    <p style="color: white"> {{p_mensaload}} </p>
 </ngx-spinner>
 <app-toast></app-toast>
