@@ -38,6 +38,7 @@ import { MascotaComponent } from './pages/mascota/mascota.component';
 import { CrearMascotaComponent } from './pages/crear-mascota/crear-mascota.component';
 import { PropietarioComponent } from './pages/propietario/propietario.component';
 import { CrearPropietarioComponent } from './pages/crear-propietario/crear-propietario.component';
+import { AnimalPropietarioComponent } from './pages/animal-propietario/animal-propietario.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { CrearPropietarioComponent } from './pages/crear-propietario/crear-propi
     CrearMascotaComponent,
     PropietarioComponent,
     CrearPropietarioComponent,
+    AnimalPropietarioComponent
   ],
   imports: [
     BrowserModule,

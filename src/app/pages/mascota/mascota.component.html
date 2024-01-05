@@ -107,6 +107,7 @@
                                             <th scope="col" class="text-center">SEXO</th>
                                             <th scope="col" class="text-center">EDAD</th>
                                             <th scope="col" class="text-center">ESTADO</th>
+                                            <th scope="col" class="text-center">ACCIONES</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -119,6 +120,7 @@
                                             <td>{{ data.ans_descri }}</td>
                                             <td>{{ data.ani_edadan }}</td>
                                             <td>{{ data.ani_estado }}</td>
+                                            <td><button type="button" (click)="RoutesNavigateAnimalPropietario(data.ani_id)" class="btn btn-primary btn-sm"><i class="bx bx-user fs-10"></i></button></td>
                                         </tr>
                                     </tbody>
                                 </table>

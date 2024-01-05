@@ -20,7 +20,7 @@ export class MascotaComponent implements OnInit {
   dtOptions: any = {
     columnDefs: [
       { width: '2px', targets: 0 },
-      { width: '100px', targets: 1 },
+      { width: '200px', targets: 1 },
       { width: '100px', targets: 2 },
       { width: '600px', targets: 3 },
       { width: '70px', targets: 4 },
@@ -166,5 +166,9 @@ export class MascotaComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  RoutesNavigateAnimalPropietario(ani_id : number) {
+    this.router.navigate(["/animal/animal-propietario/" + ani_id]);
   }
 }
