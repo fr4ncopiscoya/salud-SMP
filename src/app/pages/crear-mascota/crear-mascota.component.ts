@@ -93,8 +93,8 @@ export class CrearMascotaComponent implements OnInit {
       dataPost.append('p_esp_id', p_esp_id.toString());
       dataPost.append('p_anr_id', p_anr_id.toString());
       dataPost.append('p_ans_id', p_ans_id.toString());
-      dataPost.append('p_ani_nombre', p_ani_nombre.toString());
-      dataPost.append('p_ani_codigo', p_ani_codigo.toString());
+      dataPost.append('p_ani_nombre', p_ani_nombre);
+      dataPost.append('p_ani_codigo', p_ani_codigo);
       dataPost.append('p_ani_pesnet', p_ani_pesnet.toString());
       dataPost.append('p_ani_canpat', p_ani_canpat.toString());
       dataPost.append('p_ani_tamalt', p_ani_tamalt.toString());
@@ -103,6 +103,11 @@ export class CrearMascotaComponent implements OnInit {
       dataPost.append('p_ani_edadan', p_ani_edadan.toString());
       dataPost.append('p_ani_muerto', p_ani_muerto.toString());
       dataPost.append('p_ani_imgfot', p_ani_imgfot);
+      dataPost.append(
+        'p_car_imgfot_file[]',
+        this.imagenrecort,
+        this.imagenrecort.name
+      );
 
       dataPost.append(
         'p_imgfot_file[]',
@@ -130,6 +135,7 @@ export class CrearMascotaComponent implements OnInit {
             let result = data[0];
             if (result.hasOwnProperty('error')) {
               if (result.error === 0) {
+                
                 Swal.fire({
                   title: '<h2>Confirmación</h2>',
                   text: result.mensa,
@@ -180,7 +186,7 @@ export class CrearMascotaComponent implements OnInit {
     };
     this.sanidadService.especierazasel(post).subscribe({
       next: (data: any) => {
-        this.datosTipoSexo = data;
+        this.datosTipoRaza = data;
       },
       error: (error: any) => {
         console.log(error);
