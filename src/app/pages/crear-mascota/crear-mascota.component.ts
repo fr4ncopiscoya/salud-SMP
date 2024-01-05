@@ -21,11 +21,11 @@ export class CrearMascotaComponent implements OnInit {
   modalRef: any = BsModalRef;
 
   imageChangedEvent: any = '';
-  croppedImage: any = 'assets/images/avatardefault_92824.png';
-  imageUrl: string | null = 'assets/images/avatardefault_92824.png';
+  croppedImage: any = 'assets/images/avatardefault_pet.png';
+  imageUrl: string | null = 'assets/images/avatardefault_pet.png';
   selectedFile: File | null = null;
   p_imgfot: string = '';
-  textoimagenurl: any = 'assets/images/avatardefault_92824.png';
+  textoimagenurl: any = 'assets/images/avatardefault_pet.png';
   imagenrecort: File | null = null;
   form!: FormGroup;
 
@@ -39,15 +39,16 @@ export class CrearMascotaComponent implements OnInit {
   p_anr_id: number = 0;
   p_ans_id: number = 0;
   p_ani_nombre: string = '';
-  p_ani_pesnet: number = 0;
-  p_ani_canpat: number = 0;
-  p_ani_tamalt: number = 0;
-  p_ani_tamlar: number = 0;
+  p_ani_pesnet: string = '';
+  p_ani_canpat: string = '';
+  p_ani_tamalt: string = '';
+  p_ani_tamlar: string = '';
   p_ani_numojo: number = 0;
-  p_ani_edadan: number = 0;
+  p_ani_edadan: string = '';
   p_ani_muerto: number = 0;
   p_ani_imgfot: string = '';
   p_ani_codigo: string = '';
+  nom_img_temp: string = '';
 
   anr_id: number = 0;
   // p_ani_tamalt: string = '';
@@ -57,24 +58,36 @@ export class CrearMascotaComponent implements OnInit {
   // p_esp_activo: number = 9;
 
   //Functions
-  animalreg() {
+
+  constructor(
+    private appComponent: AppComponent,
+    private serviceMaster: MasterService,
+    private router: Router,
+    /* private fb: FormBuilder, */
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private serviceSanidad: SanidadService,
+    private modalService: BsModalService,
+    private sanitizer: DomSanitizer,
+    private sanidadService: SanidadService
+  ) {
+    this.appComponent.login = false;
+  }
+
+  ngOnInit(): void {
+    this.especiesel();
+    this.animalsexosel();
+  }
+
+  GuardarMascota() {
     const dataPost = new FormData();
     if (this.imagenrecort) {
-      // var datoEstablecimiento = (<HTMLInputElement>(
-      //   document.getElementById('datoEstablecimientos')
-      // )).value;
-      // var datoRubro = (<HTMLInputElement>document.getElementById('datoRubro'))
-      //   .value;
-      // var datoOcupacion = (<HTMLInputElement>(
-      //   document.getElementById('datoOcupacion')
-      // )).value;
 
       var p_ani_id = this.p_ani_id;
       var p_esp_id = this.p_esp_id;
       var p_anr_id = this.p_anr_id;
       var p_ans_id = this.p_ans_id;
       var p_ani_nombre = this.p_ani_nombre;
-      var p_ani_codigo = this.p_ani_codigo;
       var p_ani_pesnet = this.p_ani_pesnet;
       var p_ani_canpat = this.p_ani_canpat;
       var p_ani_tamalt = this.p_ani_tamalt;
@@ -82,19 +95,18 @@ export class CrearMascotaComponent implements OnInit {
       var p_ani_numojo = this.p_ani_numojo;
       var p_ani_edadan = this.p_ani_edadan;
       var p_ani_muerto = this.p_ani_muerto;
+      var p_imgfot = this.p_imgfot;
       var p_ani_imgfot = this.p_ani_imgfot;
 
-      // var p_imgext = p_imgfot.slice(
-      //   ((p_imgfot.lastIndexOf('.') - 1) >>> 0) + 2
-      // );
-      // console.log(p_imgext);
+      var nom_img_temp = this.nom_img_temp;
+
+      var p_ani_imgext = p_imgfot.slice(((p_imgfot.lastIndexOf(".") - 1) >>> 0) + 2);
 
       dataPost.append('p_ani_id', p_ani_id.toString());
       dataPost.append('p_esp_id', p_esp_id.toString());
       dataPost.append('p_anr_id', p_anr_id.toString());
       dataPost.append('p_ans_id', p_ans_id.toString());
       dataPost.append('p_ani_nombre', p_ani_nombre);
-      dataPost.append('p_ani_codigo', p_ani_codigo);
       dataPost.append('p_ani_pesnet', p_ani_pesnet.toString());
       dataPost.append('p_ani_canpat', p_ani_canpat.toString());
       dataPost.append('p_ani_tamalt', p_ani_tamalt.toString());
@@ -102,20 +114,10 @@ export class CrearMascotaComponent implements OnInit {
       dataPost.append('p_ani_numojo', p_ani_numojo.toString());
       dataPost.append('p_ani_edadan', p_ani_edadan.toString());
       dataPost.append('p_ani_muerto', p_ani_muerto.toString());
-      dataPost.append('p_ani_imgfot', p_ani_imgfot);
-      dataPost.append(
-        'p_car_imgfot_file[]',
-        this.imagenrecort,
-        this.imagenrecort.name
-      );
+      dataPost.append('nom_img_temp','');
+      dataPost.append('p_ani_imgfot_file[]', this.imagenrecort, this.imagenrecort.name);
+      dataPost.append('p_ani_imgext',p_ani_imgext);
 
-      dataPost.append(
-        'p_imgfot_file[]',
-        this.imagenrecort,
-        this.imagenrecort.name
-      );
-      // dataPost.append('p_imgext', p_imgext);
-      // dataPost.append('p_tdi_numero', p_tdi_numero.toString());
     } else {
       console.error('No se ha seleccionado ningún archivo.');
     }
@@ -144,7 +146,7 @@ export class CrearMascotaComponent implements OnInit {
                   confirmButtonColor: '#3085d6',
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    this.router.navigate(['carne']);
+                    this.router.navigate(['mascota']);
                   }
                 });
               } else {
@@ -171,6 +173,7 @@ export class CrearMascotaComponent implements OnInit {
     this.sanidadService.especiesel(post).subscribe({
       next: (data: any) => {
         this.datosTipoEspecie = data;
+        console.log(data);
       },
       error: (error: any) => {
         console.log(error);
@@ -178,12 +181,13 @@ export class CrearMascotaComponent implements OnInit {
     });
   }
 
-  especierazasel() {
+  ListarRaza() {
     let post = {
-      p_esp_id: 0,
+      p_esp_id: this.p_esp_id,
       p_anr_id: 0,
       p_esr_activo: 9,
     };
+    
     this.sanidadService.especierazasel(post).subscribe({
       next: (data: any) => {
         this.datosTipoRaza = data;
@@ -192,6 +196,7 @@ export class CrearMascotaComponent implements OnInit {
         console.log(error);
       },
     });
+
   }
 
   animalsexosel() {
@@ -344,23 +349,10 @@ export class CrearMascotaComponent implements OnInit {
     }
   }
 
-  constructor(
-    private appComponent: AppComponent,
-    private serviceMaster: MasterService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
-    private serviceSanidad: SanidadService,
-    private modalService: BsModalService,
-    private sanitizer: DomSanitizer,
-    private sanidadService: SanidadService
-  ) {
-    this.appComponent.login = false;
-  }
-
-  ngOnInit(): void {
-    this.especiesel();
-    this.animalsexosel();
-    this.especierazasel();
+  validarNumero(event: any): void {
+    const keyCode = event.keyCode;
+    if (keyCode < 48 || keyCode > 57) {
+      event.preventDefault();
+    }
   }
 }

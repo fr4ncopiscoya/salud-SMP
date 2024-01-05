@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AppComponent } from 'src/app/app.component';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 import { MasterService } from 'src/app/services/master.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SanidadService } from 'src/app/services/sanidad.service';
-
+import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-mascota',
@@ -13,21 +13,24 @@ import { Subject } from 'rxjs';
   styleUrls: ['./mascota.component.css'],
 })
 export class MascotaComponent implements OnInit {
+
+  @ViewChild(DataTableDirective, { static: false })
   dtElement: any;
   dtTrigger: Subject<void> = new Subject<void>();
   dtOptions: any = {
     columnDefs: [
-      { width: '5px', targets: 0 },
-      { width: '310px', targets: 1 },
-      { width: '8px', targets: 2 },
-      { width: '15px', targets: 3 },
+      { width: '2px', targets: 0 },
+      { width: '100px', targets: 1 },
+      { width: '100px', targets: 2 },
+      { width: '600px', targets: 3 },
+      { width: '70px', targets: 4 },
     ],
     dom: 'Bfrtip',
     buttons: [
       {
         extend: 'excelHtml5',
         text: 'Exportar a Excel',
-        filename: 'PERSONA', // Nombre personalizado del archivo
+        filename: 'MASCOTA', // Nombre personalizado del archivo
       },
     ],
     lengthChange: false,
@@ -44,52 +47,93 @@ export class MascotaComponent implements OnInit {
   dataAnimal: any;
   datosTipoSexo: any;
   datosTipoEspecie: any;
-  // datosTipoDocumento: any;
-  // datosTipoGenero: any;
-  // datosPais: any;
-
-  //Listado de Persona
-  // selectedPais: string = '';
+  datosTipoRaza: any;
 
   p_ani_id: number = 0;
   p_esr_id: number = 0;
   p_esp_id: number = 0;
   p_anr_id: number = 0;
   p_ans_id: number = 0;
+  p_ani_nombre: string = '';
   p_esr_activo: number = 9;
 
-  animalsel() {
-    let post = {
-      // p_ani_id: 0,
-      // p_esp_id: 0,
-      // p_anr_id: 0,
-      // p_ans_id: 0,
-      // p_ani_nombre: '',
-      // p_ani_codigo: '',
-      // p_ani_pesnet: 0,
-      // p_ani_canpat: 0,
-      // p_ani_tamalt: 0,
-      // p_ani_tamlar: 0,
-      // p_ani_numojo: 0,
-      // p_ani_edadan: 0,
-      // p_ani_muerto: 0,
-      // p_ani_imgfot: '',
+  constructor(
+    private appComponent: AppComponent,
+    private serviceMaster: MasterService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private serviceSanidad: SanidadService,
+    private sanidadService: SanidadService
+  ) {
+    this.appComponent.login = false;
+  }
 
-      p_ani_id: 0,
-      p_esr_id: 0,
-      p_esp_id: 0,
+  ngOnInit(): void {
+    this.ListarAnimal();
+    this.especiesel();
+    this.animalsexosel();
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+  
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+  }
+
+  descargaExcel() {
+    let btnExcel = document.querySelector('#tablaAplicacion_wrapper .dt-buttons .dt-button.buttons-excel.buttons-html5') as HTMLButtonElement;
+    btnExcel.click();
+  }
+
+  ListarAnimal() {
+    this.spinner.show();
+    let data_post = {
+      p_ani_id: this.p_ani_id,
+      p_esr_id: this.p_esr_id,
+      p_esp_id: this.p_esp_id,
+      p_anr_id: this.p_anr_id,
+      p_ans_id: this.p_ans_id,
+      p_ani_nombre: this.p_ani_nombre,
+      p_esr_activo: this.p_esr_activo,
+    };
+
+    this.sanidadService.animalsel(data_post).subscribe({
+      next: (data: any) => {
+        this.spinner.show();
+        this.dataAnimal = data;
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.dtTrigger.next();
+        });
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+
+  ListarRaza() {
+    let post = {
+      p_esp_id: this.p_esp_id,
       p_anr_id: 0,
-      p_ans_id: 0,
       p_esr_activo: 9,
     };
-    this.sanidadService.animalsel(post).subscribe({
+    
+    this.sanidadService.especierazasel(post).subscribe({
       next: (data: any) => {
-        this.dataAnimal = data;
+        this.datosTipoRaza = data;
       },
       error: (error: any) => {
         console.log(error);
       },
     });
+
   }
 
   especiesel() {
@@ -122,31 +166,5 @@ export class MascotaComponent implements OnInit {
         console.log(error);
       },
     });
-  }
-
-  constructor(
-    private appComponent: AppComponent,
-    private serviceMaster: MasterService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
-    private serviceSanidad: SanidadService,
-    private sanidadService: SanidadService
-  ) {
-    this.appComponent.login = false;
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
-
-  ngAfterViewInit() {
-    this.dtTrigger.next();
-  }
-
-  ngOnInit(): void {
-    this.animalsel();
-    this.especiesel();
-    this.animalsexosel();
   }
 }

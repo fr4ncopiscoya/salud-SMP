@@ -22,7 +22,7 @@
             </div>
             <div class="col-6 col-md-6 col-sm-6">
                 <div>
-                    <!-- <img [src]="croppedImage" class="img-responsive" style="width: 100%;"/> -->
+                    <img [src]="croppedImage" class="img-responsive" style="width: 100%;"/>
                 </div>
             </div>
             <div class="col-12 col-md-12 col-sm-12">
@@ -58,283 +58,118 @@
             <div class="col-xl-12">
                 <div class="card card-h-100">
                     <div class="card-body">
-                            <form [formGroup]="form">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <div class="col-md-12" style="text-align: -webkit-center;">
-                                                    <div class="text-center" style="width:215px">
-                                                        <img [src]="imageUrl" class="img-fluid" alt="Responsive image">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 mt-4" style="position: absolute;top: 270px;padding-left: 7px;">
-                                                    <input class="form-control form-control-sm" id="fileimagenup" type="file" (change)="onFileSelected($event)" accept="image/*">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="col-md-12" style="text-align: -webkit-center;">
+                                                <div class="text-center" style="width:170px">
+                                                    <img [src]="imageUrl" class="img-fluid" alt="Responsive image">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-9">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-floating">
-                                                                <select class="form-select"
-                                                                    formControlName="esp_id" [(ngModel)]="p_esp_id"
-                                                                    data-choices-sorting="true">
-                                                                    <option selected="" value="0">Seleccione...</option>
-                                                                    <option *ngFor="let data of datosTipoEspecie"
+                                            <div class="col-md-12 mt-4" style="top: 270px;padding-left: 7px;">
+                                                <input class="form-control form-control-sm" id="fileimagenup" type="file" (change)="onFileSelected($event)" accept="image/*">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
+                                                            <select class="form-select"
+                                                                [(ngModel)]="p_esp_id" data-choices-sorting="true" (change)="ListarRaza()">
+                                                                <option selected="" value="0">Seleccione...</option>
+                                                                <option *ngFor="let data of datosTipoEspecie"
                                                                     value="{{data.esp_id}}">{{data.esp_descri}}</option>
-                                                                </select>
-                                                                <label>Especie</label>
-                                                            </div>
-                                                            <div>
-                                                                <!-- <div class="text-danger">
-                                                                    Campo obligatorio</div> -->
-                                                            </div>
+                                                            </select>
+                                                            <label>Especie</label>
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-floating">
-                                                                    <select class="form-select"
-                                                                    formControlName="p_tdi_id" [(ngModel)]="anr_id" (change)="especiesel()"
-                                                                    data-choices-sorting="true">
-                                                                    <option selected="" value="0">Seleccione...</option>
-                                                                    <option *ngFor="let data of datosTipoRaza"
-                                                                    value="{{data.anr_id}}">{{data.anr_descri}}</option>
-                                                                </select>
-                                                                    <label>Raza</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-floating">
-                                                                    <select class="form-select"
-                                                                    formControlName="p_tdi_id" [(ngModel)]="p_ans_id"
-                                                                    data-choices-sorting="true">
-                                                                    <option selected="" value="0">Seleccione...</option>
-                                                                    <option *ngFor="let data of datosTipoSexo"
-                                                                    value="{{data.ans_id}}">{{data.ans_descri}}</option>
-                                                                </select>
-                                                                    <label>Sexo</label>
-                                                            </div>
+                                                        <div>
+                                                            <!-- <div class="text-danger">
+                                                                Campo obligatorio</div> -->
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="p_ani_nombre" type="text" class="form-control form-control-sm" formControlName="p_rec_apepat">
-                                                                <!-- <div
-                                                                    *ngIf="form.get('p_rec_apepat')?.invalid && (form.get('p_rec_apepat')?.dirty || form.get('p_rec_apepat')?.touched)">
-                                                                    <div class="text-danger"
-                                                                        *ngIf="form.get('p_rec_apepat')?.hasError('required')">
-                                                                        Campo obligatorio</div>
-                                                                </div> -->
-                                                                <label>Nombre Mascota</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="p_ani_edadan" type="number" class="form-control form-control-sm">
-                                                                <div>
-                                                                    <!-- <div class="text-danger"
-                                                                        *ngIf="form.get('p_rec_nombre')?.hasError('required')">
-                                                                        Campo obligatorio</div> -->
-                                                                </div>
-                                                                <label>Edad</label>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="p_ani_pesnet" type="number" class="form-control form-control-sm">
-                                                                <label>Peso</label>
-                                                            </div>
-                                                            <!-- <div
-                                                                *ngIf="form.get('p_tge_id')?.invalid && (form.get('p_tge_id')?.dirty || form.get('p_tge_id')?.touched)">
-                                                                <div class="text-danger"
-                                                                    *ngIf="form.get('p_tge_id')?.hasError('required')">
-                                                                    Campo obligatorio</div>
-                                                            </div> -->
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="p_ani_canpat" type="text" class="form-control form-control-sm" >
-                                                                <label>Patas</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="p_ani_tamalt" type="text" class="form-control form-control-sm">
-                                                                <label>Alto</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="p_ani_tamlar" type="text" class="form-control form-control-sm">
-                                                                <label>Largo</label>
-                                                            </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
+                                                                <select class="form-select" [(ngModel)]="p_anr_id" data-choices-sorting="true">
+                                                                <option selected="" value="0">Seleccione...</option>
+                                                                <option *ngFor="let data of datosTipoRaza"
+                                                                value="{{data.anr_id}}">{{data.anr_descri}}</option>
+                                                            </select>
+                                                                <label>Raza</label>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <ng-select class="custom-ng-select" formControlName="p_pai_id" [items]="datosPais" [(ngModel)]="p_pai_id" placeholder="Seleccione" bindLabel="pai_descri" bindValue="pai_id" style="border: 1px solid #b9b9b9 !important;"></ng-select>
-                                                                <label for="p_jsperf">País de origen</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <select class="form-select" id="p_ude_id"
-                                                                    formControlName="p_ude_id" [(ngModel)]="p_ude_id"
-                                                                    (change)="listarProvincias()">
-                                                                    <option selected value="0">Seleccione...</option>
-                                                                    <option *ngFor="let data of datosDepartamento"
-                                                                        value="{{data.ude_id}}">{{data.ude_descri}}</option>
-                                                                </select>
-                                                                <label>Departamento</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <select class="form-select "
-                                                                    [(ngModel)]="p_upr_id" (change)="listarDistritos()"
-                                                                    formControlName="p_upr_id">
-                                                                    <option selected value="0">Seleccione...</option>
-                                                                    <option *ngFor="let data of datosProvincia"
-                                                                        value="{{data.upr_id}}">
-                                                                        {{data.upr_descri}}</option>
-                                                                </select>
-                                                                <label>Provincia</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
                                                                 <select class="form-select"
-                                                                    [(ngModel)]="p_udi_id" formControlName="p_udi_id">
-                                                                    <option selected="" value="0">Seleccione...</option>
-                                                                    <option *ngFor="let data of datosDistrito"
-                                                                        value="{{data.udi_id}}">
-                                                                        {{data.udi_descri}}</option>
-                                                                </select>
-                                                                <label>Distrito</label>
-                                                            </div>
+                                                                [(ngModel)]="p_ans_id"
+                                                                data-choices-sorting="true">
+                                                                <option selected="" value="0">Seleccione...</option>
+                                                                <option *ngFor="let data of datosTipoSexo"
+                                                                value="{{data.ans_id}}">{{data.ans_descri}}</option>
+                                                            </select>
+                                                                <label>Sexo</label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-floating">
-                                                                <input type="text" class="form-control form-control-sm"
-                                                                    [(ngModel)]="p_rec_direcc" formControlName="p_rec_direcc">
-                                                                <div
-                                                                    *ngIf="form.get('p_rec_direcc')?.invalid && (form.get('p_rec_direcc')?.dirty || form.get('p_rec_direcc')?.touched)">
-                                                                    <div class="text-danger"
-                                                                        *ngIf="form.get('p_rec_direcc')?.hasError('required')">
-                                                                        Campo obligatorio</div>
-                                                                </div>
-                                                                <label>Dirección</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                             </div>
                                             <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="text-end">
-                                                            <button (click)="animalreg()" type="button" class="btn btn-primary" style="margin-right: 5px;"> <i class=""></i>Guardar</button>
-                                                            <button type="button" class="btn btn-danger" [routerLink]="['/persona']">Cancelar</button>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_nombre" type="text" class="form-control form-control-sm">
+                                                            <label>Nombre Mascota</label>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <!-- <div class="row">
-                                <div class="col-xl-12 pt-3">
-                                    <div class="card text-primary border-0">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h5 class="card-title fs-17">Datos de Establecimiento</h5>
-                                                </div>
-                                                <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="selectedValueRubro" [typeahead]="datosRubro" id="datoRubro"
-                                                                        (typeaheadOnBlur)="typeaheadOnBlurRubro($event)"
-                                                                        (typeaheadNoResults)="typeaheadNoResultsRubro($event)"
-                                                                        typeaheadOptionField="act_descri" (typeaheadOnSelect)="onSelectRubro($event)"
-                                                                        (typeaheadOnPreview)="onPreviewPuestRubro($event)" class="form-control"
-                                                                        oninput="this.value = this.value.toUpperCase()">
-                                                                <label>Rubro / Giro</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-5">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="selectedValueOcupacion" [typeahead]="datosOcupacion" id="datoOcupacion"
-                                                                        (typeaheadOnBlur)="typeaheadOnBlurOcupacion($event)"
-                                                                        (typeaheadNoResults)="typeaheadNoResultsOcupacion($event)"
-                                                                        typeaheadOptionField="ocu_descri" (typeaheadOnSelect)="onSelectOcupacion($event)"
-                                                                        (typeaheadOnPreview)="onPreviewPuestOcupacion($event)" class="form-control"
-                                                                        oninput="this.value = this.value.toUpperCase()">
-                                                                <label>Ocupación</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label for="colFormLabelSm"
-                                                                class="col-form-label col-form-label-sm">Manipula
-                                                                alimentos?<span class="text-danger"> *</span></label>
-                                                            <div class="form-check form-switch mb-3" dir="ltr">
-                                                                <input type="checkbox" class="form-check-input" [(ngModel)]="p_manali" checked="" (change)="Changemanali()">
-                                                                <label class="col-form-label-sm">{{confsinomanali}}</label>
-                                                            </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_edadan" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Edad</label>
                                                         </div>
                                                     </div>
+                                                    
                                                 </div>
-                                                <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-floating">
-                                                                <input [(ngModel)]="selectedValue" [typeahead]="datosEstablecimientos" id="datoEstablecimientos"
-                                                                        (typeaheadOnBlur)="typeaheadOnBlur($event)"
-                                                                        (typeaheadNoResults)="typeaheadNoResults($event)"
-                                                                        typeaheadOptionField="etb_nombre" (typeaheadOnSelect)="onSelect($event)"
-                                                                        (typeaheadOnPreview)="onPreviewPuest($event)" class="form-control"
-                                                                        oninput="this.value = this.value.toUpperCase()"> 
-                                                                <label for="p_jsperf">Establecimiento</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            <div class="form-floating">
-                                                                <input type="text" class="form-control form-control-sm" [(ngModel)]="p_etb_direcc">
-                                                                <label>Dirección del Establecimiento</label>
-                                                            </div>
+                                            </div>
+                                            <div class="col-md-12 mt-2">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_pesnet" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Peso(kg)</label>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12 mt-2">
-                                                    <div class="row">
-                                                        <div class="text-end">
-                                                            <button type="button" class="btn btn-primary" style="margin-right: 5px;"
-                                                                (click)="guardarRecurrente()"> <i class=""></i>Guardar</button>
-                                                            <button type="button" class="btn btn-danger" [routerLink]="['/persona']">Cancelar</button>
+                                                    <div class="col-md-3">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_canpat" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Patas</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_tamalt" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Alto(cm)</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_tamlar" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Largo(cm)</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 mt-2">
+                                                <div class="row">
+                                                    <div class="text-end">
+                                                        <button (click)="GuardarMascota()" type="button" class="btn btn-primary" style="margin-right: 5px;"> <i class=""></i>Guardar</button>
+                                                        <button type="button" class="btn btn-danger" [routerLink]="['/mascota']">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>

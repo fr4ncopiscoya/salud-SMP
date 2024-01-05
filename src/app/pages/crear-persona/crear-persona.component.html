@@ -189,7 +189,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-floating">
                                                                 <select class="form-select" id="p_ude_id"
-                                                                    formControlName="p_ude_id" [(ngModel)]="p_ude_id" (change)="listarProvincias()">>
+                                                                    formControlName="p_ude_id" [(ngModel)]="p_ude_id" (change)="listarProvincias()">
                                                                     <option selected value="0">Seleccione...</option>
                                                                     <option *ngFor="let data of datosDepartamento"
                                                                         value="{{data.ude_id}}">{{data.ude_descri}}</option>
