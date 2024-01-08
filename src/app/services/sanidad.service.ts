@@ -191,6 +191,22 @@ export class SanidadService {
         })
     );
   }
+  
+  ListarAnimalPropietario(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/ListarAnimalPropietario', data).pipe(
+        map(data => {
+            return data;
+        })
+    );
+  }
+  
+  GuardarAnimalPropietario(data: any) {
+    return this.httpClientUtils.postQuery('sanidad/animalpropietarioreg', data).pipe(
+        map(data => {
+            return data;
+        })
+    );
+  }
 
   AnularCertificado(data: any) {
     return this.httpClientUtils.postQuery('sanidad/AnularCertificado', data).pipe(
