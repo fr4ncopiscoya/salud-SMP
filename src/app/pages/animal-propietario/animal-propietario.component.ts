@@ -25,7 +25,7 @@ export class AnimalPropietarioComponent implements OnInit {
   dtOptions: any = {  
     columnDefs: [
       { width: '5px', targets: 0 },
-      { width: '150px', targets: 1 },
+      { width: '300px', targets: 1 },
       { width: '250px', targets: 2 },
       { width: '80px', targets: 3 },
     ],
@@ -275,7 +275,7 @@ export class AnimalPropietarioComponent implements OnInit {
                   Swal.fire({ title: '<h2>Confirmación</h2>', text: result.mensa, icon: 'success', confirmButtonText: 'Cerrar', confirmButtonColor: "#3085d6" }).then((result) => {
                     if (result.isConfirmed) {
                       this.CerrarModal();
-                      this.router.navigate(['mascota']);
+                      window.location.reload();
                     }
                   });
                 }else{

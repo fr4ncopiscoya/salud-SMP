@@ -19,7 +19,7 @@ export class PropietarioComponent implements OnInit {
   dtOptions: any = {  
     columnDefs: [
       { width: '5px', targets: 0 },
-      { width: '150px', targets: 1 },
+      { width: '300px', targets: 1 },
       { width: '320px', targets: 2 },
       { width: '15px', targets: 3 },
     ],
