@@ -43,7 +43,7 @@ export class CrearMascotaComponent implements OnInit {
   p_ani_canpat: string = '';
   p_ani_tamalt: string = '';
   p_ani_tamlar: string = '';
-  p_ani_numojo: number = 0;
+  p_ani_numojo: string = '';
   p_ani_edadan: string = '';
   p_ani_muerto: number = 0;
   p_ani_imgfot: string = '';
@@ -51,6 +51,7 @@ export class CrearMascotaComponent implements OnInit {
   nom_img_temp: string = '';
 
   anr_id: number = 0;
+  confsimuerto: string = '';
   // p_ani_tamalt: string = '';
 
   //Especie_Sel
@@ -77,6 +78,14 @@ export class CrearMascotaComponent implements OnInit {
   ngOnInit(): void {
     this.especiesel();
     this.animalsexosel();
+  }
+  ChangeMuerto(){
+    console.log(this.p_ani_muerto);
+    if (this.p_ani_muerto) {
+      this.confsimuerto = 'SI';
+    }else{
+      this.confsimuerto = 'NO';
+    }
   }
 
   GuardarMascota() {
